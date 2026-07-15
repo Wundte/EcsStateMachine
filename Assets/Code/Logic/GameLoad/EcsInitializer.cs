@@ -1,0 +1,81 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using Code.Configs.Ecs;
+using Code.Data.Ecs;
+using Code.Logic.Ecs;
+using Leopotam.EcsLite;
+using Leopotam.EcsLite.Di;
+using UnityEngine;
+
+namespace Code.Logic.GameLoad
+{
+    public sealed class EcsInitializer : IDisposable
+    {
+        private EcsWorld _world;
+        
+        private readonly Dictionary<SystemType, EcsSystems> _systems = new();
+
+        public EcsInitializer(List<object> injectParameters, EcsConfig ecsConfig)
+        {
+            _world = new EcsWorld ();
+
+            var systemTypes = Enum.GetValues(typeof(SystemType));
+            foreach (var item in systemTypes)
+            {
+                _systems.Add((SystemType)item, new EcsSystems(_world));
+            }
+            
+            // AddSystemsAndFeaturesToSystemsDictionary(ecsConfig);
+
+            InjectAndInitSystems(injectParameters);
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void StartEcsLoop()
+        {
+            var ecsLoopGameObject = new GameObject
+            {
+#if UNITY_EDITOR
+                name = "EcsLoop"
+#endif
+            };
+            var ecsLoop = ecsLoopGameObject.AddComponent<EcsLoop>();
+
+            ecsLoop.Init(_systems);
+        }
+        
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void InjectAndInitSystems(List<object> injectParameters)
+        {
+            var injectArray = injectParameters.ToArray();
+            foreach (var system in _systems)
+            {
+                system.Value.Inject(injectArray);
+            }
+            
+            foreach (var systems in _systems)
+            {
+                systems.Value.Init();
+            }
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Dispose()
+        {
+            var systemsList = _systems.Values.ToList();
+            for (var i = 0; i < systemsList.Count; i++)
+            {
+                systemsList[i].Destroy();
+                systemsList[i] = null;
+            }
+            
+            systemsList.Clear();
+            _systems.Clear();
+            
+            _world.Destroy();
+            _world = null;
+        }
+    }
+}
