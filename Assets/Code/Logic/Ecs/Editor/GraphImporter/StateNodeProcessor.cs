@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Code.Data.Ecs.EcsStateMachine;
 using Code.Data.Ecs.EcsStateMachine.Editor.GraphNodes;
+using Code.Logic.Ecs.Features;
 using Generated;
+using Leopotam.EcsLite;
 using Unity.GraphToolkit.Editor;
 
 namespace Code.Logic.Ecs.Editor.GraphImporter
@@ -52,15 +55,20 @@ namespace Code.Logic.Ecs.Editor.GraphImporter
                 Name = name,
                 DefaultNextState = defaultNextState,
                 PossibleNextStates = possibleNextStates,
-                OnStateEnterSystems = GetBlockNodeValues<OnStateEnterSystemsBlockNode, EcsRunSystemsIds>(stateNode),
-                Features = GetBlockNodeValues<FeaturesBlockNode, EcsFeatureIds>(stateNode),
+                OnStateEnterSystems = GetBlockData<OnStateEnterSystemsBlockNode, EcsRunSystemsIds, IEcsRunSystem>(
+                    stateNode, 
+                    EcsRunSystemsFactory.Create),
+                Features = GetBlockData<FeaturesBlockNode, EcsFeatureIds, EcsFeature>(
+                    stateNode, 
+                    EcsFeatureFactory.Create),
             };
         }
         
-        private static List<TValue> GetBlockNodeValues<TBlock, TValue>(StateNode stateNode)
+        private static List<TResult> GetBlockData<TBlock, TEnum, TResult>(StateNode stateNode, Func<TEnum, TResult> factory)
             where TBlock : BlockNode
+            where TEnum : struct, Enum
         {
-            var result = new List<TValue>();
+            var result = new List<TResult>();
 
             if (stateNode is not ContextNode contextNode)
             {
@@ -69,14 +77,16 @@ namespace Code.Logic.Ecs.Editor.GraphImporter
 
             foreach (var blockNode in contextNode.BlockNodes)
             {
-                if (blockNode is TBlock block)
+                if (blockNode is not TBlock block)
                 {
-                    foreach (var port in block.GetInputPorts())
+                    continue;
+                }
+
+                foreach (var port in block.GetInputPorts())
+                {
+                    if (port.TryGetValue(out TEnum value))
                     {
-                        if (port.TryGetValue(out TValue value))
-                        {
-                            result.Add(value);
-                        }
+                        result.Add(factory(value));
                     }
                 }
             }

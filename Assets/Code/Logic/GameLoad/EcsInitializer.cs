@@ -2,37 +2,42 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using Code.Configs.Ecs;
 using Code.Data.Ecs;
+using Code.Data.Ecs.EcsStateMachine;
 using Code.Logic.Ecs;
+using Code.Logic.Services;
+using Generated;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.Di;
+using Leopotam.EcsLite.ExtendedSystems;
 using UnityEngine;
 
 namespace Code.Logic.GameLoad
 {
     public sealed class EcsInitializer : IDisposable
     {
-        private EcsWorld _world;
+        private EcsWorld _ecsWorld;
         
         private readonly Dictionary<SystemType, EcsSystems> _systems = new();
 
-        public EcsInitializer(List<object> injectParameters, EcsConfig ecsConfig)
+        public EcsInitializer(
+            List<object> injectParameters, 
+            RuntimeEcsStateMachineGraph ecsStateMachineGraph, 
+            EcsWorld ecsWorld)
         {
-            _world = new EcsWorld ();
+            _ecsWorld = ecsWorld;
 
             var systemTypes = Enum.GetValues(typeof(SystemType));
             foreach (var item in systemTypes)
             {
-                _systems.Add((SystemType)item, new EcsSystems(_world));
+                _systems.Add((SystemType)item, new EcsSystems(_ecsWorld));
             }
             
-            // AddSystemsAndFeaturesToSystemsDictionary(ecsConfig);
-
+            SelectSystems(ecsStateMachineGraph);
+            
             InjectAndInitSystems(injectParameters);
         }
         
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void StartEcsLoop()
         {
             var ecsLoopGameObject = new GameObject
@@ -44,6 +49,30 @@ namespace Code.Logic.GameLoad
             var ecsLoop = ecsLoopGameObject.AddComponent<EcsLoop>();
 
             ecsLoop.Init(_systems);
+        }
+        
+        private void SelectSystems(RuntimeEcsStateMachineGraph ecsConfig)
+        {
+            var runSystems = _systems[SystemType.Run];
+            foreach (var (_, stateNode) in ecsConfig.AllRuntimeStateNodes)
+            {
+                // Select run systems
+                for (var j = 0; j < stateNode.OnStateEnterSystems.Count; j++)
+                {
+                    runSystems.Add(stateNode.OnStateEnterSystems[j]);
+                }
+                
+                // Select system groups from features
+                for (var j = 0; j < stateNode.Features.Count; j++)
+                {
+                    var feature = stateNode.Features[j];
+                    // We can safely parse because enum values are generated from state names.
+                    var stateId = Enum.Parse<EcsStatesIds>(stateNode.Name);
+                    var id = StateFeaturesIdsService.GetStateId(feature.GetType(), stateId);
+                    
+                    runSystems.AddGroup(id, true, null, feature);
+                }
+            }
         }
         
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -74,8 +103,8 @@ namespace Code.Logic.GameLoad
             systemsList.Clear();
             _systems.Clear();
             
-            _world.Destroy();
-            _world = null;
+            _ecsWorld.Destroy();
+            _ecsWorld = null;
         }
     }
 }

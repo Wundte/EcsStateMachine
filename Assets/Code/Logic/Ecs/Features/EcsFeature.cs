@@ -6,7 +6,12 @@ namespace Code.Logic.Ecs.Features
 {
     public abstract class EcsFeature
     {
-        protected readonly List<IEcsSystem> _systems = new();
+        public readonly List<IEcsSystem> _systems;
+
+        public EcsFeature()
+        {
+            _systems = new List<IEcsSystem>();
+        }
         
         /// <summary>
         /// Override this method to add systems to feature

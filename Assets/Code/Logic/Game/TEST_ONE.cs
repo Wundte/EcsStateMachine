@@ -1,4 +1,5 @@
 ﻿using Leopotam.EcsLite;
+using UnityEngine;
 
 namespace Code.Logic.Game
 {
@@ -6,7 +7,7 @@ namespace Code.Logic.Game
     {
         public void Run(EcsSystems systems)
         {
-            
+            Debug.Log("TEST_ONE");
         }
     }
 }

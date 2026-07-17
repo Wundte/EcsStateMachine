@@ -17,7 +17,7 @@ namespace Code.Logic.Ecs
         
         private void Update()
         {
-            _systems[SystemType.Update].Run();
+            _systems[SystemType.Run].Run();
         }
     }
 }
