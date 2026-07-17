@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace Code.Data.Ecs.EcsStateMachine
 {
     [System.Serializable]
-    public sealed class RuntimeEcsStateMachineGraph : ScriptableObject
+    public sealed class RuntimeEcsStateMachineGraph : SerializedScriptableObject
     {
         /// <summary>
         /// All runtime state nodes with hash as key. 

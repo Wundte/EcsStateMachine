@@ -43,10 +43,10 @@ MonoBehaviour:
         m_LocalSubgraphs: []
         m_LastKnownBounds:
           serializedVersion: 2
-          x: -2429
-          y: 69
-          width: 1106
-          height: 668
+          x: -2461
+          y: 77
+          width: 767
+          height: 571
         m_GraphElementMetaData:
         - m_Guid:
             m_Value0: 12506084263997346554
@@ -109,7 +109,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: a3a97ce56784931395c4ed6ac8aa2ac7
         m_Version: 2
-        m_Position: {x: -1529.5845, y: 69.02379}
+        m_Position: {x: -1900.6779, y: 76.62817}
         m_Title: 
         m_Tooltip: 
         m_NodePreviewModel:
@@ -151,7 +151,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: 19b3e67d2af16cbfa2b9fa1811553a81
         m_Version: 2
-        m_Position: {x: -2429.336, y: 143.26193}
+        m_Position: {x: -2461.2742, y: 102.1983}
         m_Title: 
         m_Tooltip: 
         m_NodePreviewModel:
@@ -251,15 +251,11 @@ MonoBehaviour:
           - 0
           - 1
           - 2
-          - 3
-          - 4
           m_ValueList:
           - rid: 7162829345424670889
           - rid: 7162829367316840543
           - rid: 7162829367316840556
           - rid: 7162829367316840557
-          - rid: 7162829367316840558
-          - rid: 7162829367316840559
         m_InputPortInfos:
           expandedPortsById:
             m_KeyList: []
@@ -280,7 +276,7 @@ MonoBehaviour:
     - rid: 7162829345424670889
       type: {class: 'Constant`1[[System.Int32, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: UnityEditor.GraphToolkitModule}
       data:
-        m_Value: 5
+        m_Value: 3
     - rid: 7162829345424670891
       type: {class: OnStateEnterSystemsBlockNode, ns: Code.Data.Ecs.EcsStateMachine.Editor.GraphNodes, asm: Assembly-CSharp-Editor}
       data: 
@@ -349,7 +345,7 @@ MonoBehaviour:
           m_EnumType:
             m_Identification: Generated.EcsRunSystemsIds, Assembly-CSharp, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
-          m_Value: 0
+          m_Value: 153820277
         m_EnumType:
           m_Identification: Generated.EcsRunSystemsIds, Assembly-CSharp, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
@@ -360,29 +356,7 @@ MonoBehaviour:
           m_EnumType:
             m_Identification: Generated.EcsRunSystemsIds, Assembly-CSharp, Version=0.0.0.0,
               Culture=neutral, PublicKeyToken=null
-          m_Value: 0
-        m_EnumType:
-          m_Identification: Generated.EcsRunSystemsIds, Assembly-CSharp, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-    - rid: 7162829367316840558
-      type: {class: EnumConstant, ns: Unity.GraphToolkit.Editor, asm: UnityEditor.GraphToolkitModule}
-      data:
-        m_Value:
-          m_EnumType:
-            m_Identification: Generated.EcsRunSystemsIds, Assembly-CSharp, Version=0.0.0.0,
-              Culture=neutral, PublicKeyToken=null
-          m_Value: 0
-        m_EnumType:
-          m_Identification: Generated.EcsRunSystemsIds, Assembly-CSharp, Version=0.0.0.0,
-            Culture=neutral, PublicKeyToken=null
-    - rid: 7162829367316840559
-      type: {class: EnumConstant, ns: Unity.GraphToolkit.Editor, asm: UnityEditor.GraphToolkitModule}
-      data:
-        m_Value:
-          m_EnumType:
-            m_Identification: Generated.EcsRunSystemsIds, Assembly-CSharp, Version=0.0.0.0,
-              Culture=neutral, PublicKeyToken=null
-          m_Value: 0
+          m_Value: 153820277
         m_EnumType:
           m_Identification: Generated.EcsRunSystemsIds, Assembly-CSharp, Version=0.0.0.0,
             Culture=neutral, PublicKeyToken=null
