@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using Unity.GraphToolkit.Editor;
+﻿using Unity.GraphToolkit.Editor;
+using UnityEngine;
 
 namespace Code.Data.Ecs.EcsStateMachine.Editor.GraphNodes
 {
     [System.Serializable]
-    public sealed class StateNode : Node
+    public sealed class StateNode : ContextNode
     {
         public const string StateName = "StateName";
         
@@ -17,7 +16,6 @@ namespace Code.Data.Ecs.EcsStateMachine.Editor.GraphNodes
         protected override void OnDefineOptions(IOptionDefinitionContext context)
         {
             context.AddOption<string>(StateName).Build();
-            context.AddOption<float[]>("Combined Array").Build();
         }
 
         protected override void OnDefinePorts(IPortDefinitionContext context)
@@ -26,6 +24,11 @@ namespace Code.Data.Ecs.EcsStateMachine.Editor.GraphNodes
             
             context.AddOutputPort(DefaultNextState).Build();
             context.AddOutputPort(PossibleNextStates).Build();
+        }
+        
+        public override void OnEnable()
+        {
+            DefaultColor = Color.blue;
         }
     }
 }

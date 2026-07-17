@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using Generated;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Code.Logic.GameLoad
