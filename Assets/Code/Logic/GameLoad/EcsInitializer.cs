@@ -65,10 +65,14 @@ namespace Code.Logic.GameLoad
                 // Select system groups from features
                 for (var j = 0; j < stateNode.Features.Count; j++)
                 {
+                    // This check is needed just in case the generation or id hash went wrong. 
+                    if (!Enum.IsDefined(typeof(EcsStatesIds), stateNode.Id))
+                    {
+                        throw new Exception($"Unknown state id: {stateNode.Id}");
+                    }
+                    
                     var feature = stateNode.Features[j];
-                    // We can safely parse because enum values are generated from state names.
-                    var stateId = Enum.Parse<EcsStatesIds>(stateNode.Name);
-                    var id = StateFeaturesIdsService.GetStateId(feature.GetType(), stateId);
+                    var id = StateFeaturesIdsService.GetStateId(feature.GetType(), (EcsStatesIds)stateNode.Id);
                     
                     runSystems.AddGroup(id, true, null, feature);
                 }

@@ -43,10 +43,10 @@ MonoBehaviour:
         m_LocalSubgraphs: []
         m_LastKnownBounds:
           serializedVersion: 2
-          x: -2314
-          y: 76
-          width: 620
-          height: 546
+          x: -2520
+          y: 77
+          width: 826
+          height: 549
         m_GraphElementMetaData:
         - m_Guid:
             m_Value0: 12506084263997346554
@@ -151,7 +151,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: 19b3e67d2af16cbfa2b9fa1811553a81
         m_Version: 2
-        m_Position: {x: -2388.7493, y: 62.343414}
+        m_Position: {x: -2519.9246, y: 79.83348}
         m_Title: 
         m_Tooltip: 
         m_NodePreviewModel:
@@ -224,11 +224,11 @@ MonoBehaviour:
     - rid: 7162829345424670886
       type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: UnityEditor.GraphToolkitModule}
       data:
-        m_Value: Test
+        m_Value: Test2
     - rid: 7162829345424670887
       type: {class: 'Constant`1[[System.String, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: UnityEditor.GraphToolkitModule}
       data:
-        m_Value: Expample
+        m_Value: Lol2
     - rid: 7162829345424670888
       type: {class: UserBlockNodeModelImp, ns: Unity.GraphToolkit.Editor.Implementation, asm: UnityEditor.GraphToolkitModule}
       data:

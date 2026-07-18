@@ -5,7 +5,6 @@ using Code.Data.Ecs.EcsStateMachine.Editor.GraphNodes;
 using Code.Logic.CodeGeneration.Editor.Generation.Types;
 using Code.Logic.CodeGeneration.Editor.Output;
 using Code.Logic.CodeGeneration.Editor.SourceGenerationData.Enums;
-using Code.Logic.CodeGeneration.Editor.Utils;
 using Unity.GraphToolkit.Editor;
 using UnityEditor.AssetImporters;
 using UnityEngine;
@@ -21,26 +20,20 @@ namespace Code.Logic.Ecs.Editor.GraphImporter
             
             var runtimeEcsStateMachineGraph = ScriptableObject.CreateInstance<RuntimeEcsStateMachineGraph>();
             
-            // Select all nodes
-            // Using dictionary we circumvent serialization depth limit allowing for loops inside graph
-            var allNodes = new Dictionary<int, INode>();
-            foreach (var node in editorEventGraph.GetNodes())
-            {
-                allNodes.Add(node.GetHashCode(), node);
-            }
-            
             var values = new List<EnumValue>();
-            foreach (var (id, node) in allNodes)
+            foreach (var node in editorEventGraph.GetNodes())
             {
                 if (node is StateNode stateNode)
                 {
                     var newRuntimeStateNode = StateNodeProcessor.GetNew(stateNode);
-                    runtimeEcsStateMachineGraph.AllRuntimeStateNodes.Add(id, newRuntimeStateNode);
+                    runtimeEcsStateMachineGraph.AllRuntimeStateNodes.Add(newRuntimeStateNode.Id, newRuntimeStateNode);
+                    
+                    stateNode.GetNodeOptionByName(StateNode.StateName).TryGetValue(out string stateName);
                     
                     values.Add(new EnumValue
                     {
-                        Name = newRuntimeStateNode.Name,
-                        Value = StableId.Get(newRuntimeStateNode.Name)
+                        Name = stateName,
+                        Value = newRuntimeStateNode.Id
                     });
                 }
             }

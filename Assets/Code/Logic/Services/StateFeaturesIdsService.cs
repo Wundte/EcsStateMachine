@@ -15,14 +15,13 @@ namespace Code.Logic.Services
         public void Init(RuntimeEcsStateMachineGraph ecsConfig)
         {
             Ids.Clear();
-
+            
             foreach (var (_, stateNode) in ecsConfig.AllRuntimeStateNodes)
             {
-                // We can safely parse because enum values are generated from state names.
-                var stateId = Enum.Parse<EcsStatesIds>(stateNode.Name);
+                var stateId = (EcsStatesIds)stateNode.Id;
                 foreach (var feature in stateNode.Features)
                 {
-                    Ids.Add((feature.GetType(), stateId), $"ID_{feature.GetType().Name}_{stateNode.Name}");
+                    Ids.Add((feature.GetType(), stateId), $"ID_{feature.GetType().Name}_{stateId}");
                 }
             }
         }

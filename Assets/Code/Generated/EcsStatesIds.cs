@@ -4,7 +4,7 @@ namespace Generated
 {
     public enum EcsStatesIds
     {
-        Test = 18303043,
-        Expample = 1758538097,
+        Test2 = 567394383,
+        Lol2 = 18074042,
     }
 }

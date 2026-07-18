@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Code.Data.Ecs.EcsStateMachine;
 using Generated;
 using Leopotam.EcsLite;
@@ -11,16 +12,26 @@ namespace Code.Logic.Services
         public static EcsStatesIds CurrentState { get; private set; }
         
         private static RuntimeEcsStateMachineGraph _ecsStateMachineGraph;
+        // private static Dictionary<EcsStatesIds, RuntimeStateNode> _stateNodes = new();
         private static EcsWorld _ecsWorld;
         
         public void Init(RuntimeEcsStateMachineGraph ecsStateMachineGraph, EcsWorld ecsWorld)
         {
             _ecsStateMachineGraph = ecsStateMachineGraph;
+
+            // foreach (var (_, stateNode) in ecsStateMachineGraph.AllRuntimeStateNodes)
+            // {
+            //     // We can safely parse because enum values are generated from state names.
+            //     var stateId = Enum.Parse<EcsStatesIds>(stateNode.Name);
+            //     _stateNodes.Add(stateId, stateNode);
+            // }
+            
             _ecsWorld = ecsWorld;
         }
 
         public static void NextState()
         {
+            // var currentStateStateNode = _stateNodes[CurrentState];
             
         }
 
@@ -29,9 +40,14 @@ namespace Code.Logic.Services
             
         }
 
+        private static void ChangeState(EcsStatesIds oldState, EcsStatesIds newState)
+        {
+            
+        }
+
         public static void DeactivateSystemsForState(EcsStatesIds state)
         {
-            // if (_ecsStateMachineGraph.AllRuntimeStateNodes.TryGetValue(state, out var runtimeStateNode))
+            // if (_stateNodes.TryGetValue(state, out var runtimeStateNode))
             // {
             //     
             // }

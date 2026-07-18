@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Code.Data.Ecs.EcsStateMachine;
 using Code.Data.Ecs.EcsStateMachine.Editor.GraphNodes;
+using Code.Logic.CodeGeneration.Editor.Utils;
 using Code.Logic.Ecs.Features;
 using Generated;
 using Leopotam.EcsLite;
@@ -30,10 +31,10 @@ namespace Code.Logic.Ecs.Editor.GraphImporter
                 var connectedNode = connectedPort.GetNode();
                 if (connectedNode is StateNode defaultNextStateNode)
                 {
-                    defaultNextState = defaultNextStateNode.GetHashCode();
+                    defaultNextStateNode.GetNodeOptionByName(StateNode.StateName).TryGetValue(out string nextStateName);
+                    defaultNextState = StableId.Get(nextStateName);
                 }
             }
-            
             
             // Precess possible next states out port
             var outPossibleNextStatesPort = stateNode.GetOutputPortByName(StateNode.DefaultNextState);
@@ -46,13 +47,14 @@ namespace Code.Logic.Ecs.Editor.GraphImporter
                 var connectedNode = connectedPort.GetNode();
                 if (connectedNode is StateNode possibleNextStateNode)
                 {
-                    possibleNextStates.Add(possibleNextStateNode.GetHashCode());
+                    possibleNextStateNode.GetNodeOptionByName(StateNode.StateName).TryGetValue(out string nextStateName);
+                    possibleNextStates.Add(StableId.Get(nextStateName));
                 }
             }
             
             return new RuntimeStateNode
             {
-                Name = name,
+                Id = StableId.Get(name),
                 DefaultNextState = defaultNextState,
                 PossibleNextStates = possibleNextStates,
                 OnStateEnterSystems = GetBlockData<OnStateEnterSystemsBlockNode, EcsRunSystemsIds, IEcsRunSystem>(
