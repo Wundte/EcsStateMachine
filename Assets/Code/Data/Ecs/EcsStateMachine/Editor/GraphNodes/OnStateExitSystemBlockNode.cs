@@ -5,7 +5,7 @@ using Unity.GraphToolkit.Editor;
 namespace Code.Data.Ecs.EcsStateMachine.Editor.GraphNodes
 {
     [UseWithContext(typeof(StateNode))] [System.Serializable]
-    public class OnStateEnterSystemsBlockNode : BlockNode
+    public sealed class OnStateExitSystemBlockNode : BlockNode
     {
         private const string NumberOfSystem = "NumberOfSystem";
         
@@ -36,7 +36,7 @@ namespace Code.Data.Ecs.EcsStateMachine.Editor.GraphNodes
         
         public override void OnEnable()
         {
-            Title = "On State Enter Systems:";
+            Title = "On State Exit Systems:";
         }
     }
 }

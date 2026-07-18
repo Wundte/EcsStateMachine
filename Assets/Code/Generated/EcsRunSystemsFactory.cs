@@ -2,16 +2,17 @@
 
 using System;
 using Leopotam.EcsLite;
+using Code.Logic.Ecs.Interfaces;
 
 namespace Generated
 {
-    public static class EcsRunSystemsFactory
+    public static class EcsStateChangeSystemsFactory
     {
-        public static IEcsRunSystem Create(EcsRunSystemsIds id)
+        public static IEcsStateChangeSystem Create(EcsStateChangeSystemsIds id)
         {
             return id switch
             {
-                EcsRunSystemsIds.TEST_ONE => new Code.Logic.Game.TEST_ONE(),
+                EcsStateChangeSystemsIds.StateChangeTest => new Code.Demo.Logic.StateChangeTest(),
                 _ => throw new ArgumentOutOfRangeException(nameof(id), id, null)
             };
         }

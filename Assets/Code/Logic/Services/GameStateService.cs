@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Code.Data.Ecs.EcsStateMachine;
 using Generated;
 using Leopotam.EcsLite;
@@ -12,53 +11,68 @@ namespace Code.Logic.Services
         public static EcsStatesIds CurrentState { get; private set; }
         
         private static RuntimeEcsStateMachineGraph _ecsStateMachineGraph;
-        // private static Dictionary<EcsStatesIds, RuntimeStateNode> _stateNodes = new();
         private static EcsWorld _ecsWorld;
         
         public void Init(RuntimeEcsStateMachineGraph ecsStateMachineGraph, EcsWorld ecsWorld)
         {
             _ecsStateMachineGraph = ecsStateMachineGraph;
-
-            // foreach (var (_, stateNode) in ecsStateMachineGraph.AllRuntimeStateNodes)
-            // {
-            //     // We can safely parse because enum values are generated from state names.
-            //     var stateId = Enum.Parse<EcsStatesIds>(stateNode.Name);
-            //     _stateNodes.Add(stateId, stateNode);
-            // }
-            
             _ecsWorld = ecsWorld;
         }
 
         public static void NextState()
         {
-            // var currentStateStateNode = _stateNodes[CurrentState];
+            var currentStateStateNode = _ecsStateMachineGraph.AllRuntimeStateNodes[(int)CurrentState];
+            var defaultNextState = (EcsStatesIds)currentStateStateNode.DefaultNextState;
             
+            ChangeState(CurrentState, defaultNextState);
         }
 
         public static void NextState(EcsStatesIds state)
         {
-            
+            var currentStateStateNode = _ecsStateMachineGraph.AllRuntimeStateNodes[(int)CurrentState];
+            if (currentStateStateNode.PossibleNextStates.Contains((int)state))
+            {
+                ChangeState(CurrentState, state);
+            }
         }
 
         private static void ChangeState(EcsStatesIds oldState, EcsStatesIds newState)
         {
+            if (_ecsStateMachineGraph.AllRuntimeStateNodes.TryGetValue((int)oldState, out var oldStateNode))
+            {
+                // Deactivate features for old state
+                for (var i = 0; i < oldStateNode.Features.Count; i++)
+                {
+                    var featureType  = oldStateNode.Features[i].GetType();
+                    
+                    ChangeSystemGroupState(featureType, oldState, false);
+                }
+                
+                // Run on state exit systems
+                for (var i = 0; i < oldStateNode.OnStateExitSystems.Count; i++)
+                {
+                    oldStateNode.OnStateExitSystems[i].Run();
+                }
+            }
             
-        }
-
-        public static void DeactivateSystemsForState(EcsStatesIds state)
-        {
-            // if (_stateNodes.TryGetValue(state, out var runtimeStateNode))
-            // {
-            //     
-            // }
-            //
-            // var featureGroup = _featureGroupContainers[state];
-            //
-            // foreach (var featureContainer in featureGroup.Features)
-            // {
-            //     var featureType = featureContainer.Feature.GetType();
-            //     ChangeSystemGroupState(featureType, featureGroup.GameState, false);
-            // }
+            if (_ecsStateMachineGraph.AllRuntimeStateNodes.TryGetValue((int)newState, out var newStateNode))
+            {
+                // Run on state enter systems
+                for (var i = 0; i < newStateNode.OnStateExitSystems.Count; i++)
+                {
+                    newStateNode.OnStateExitSystems[i].Run();
+                }
+                
+                // Activate features for old state
+                for (var i = 0; i < newStateNode.Features.Count; i++)
+                {
+                    var featureType  = newStateNode.Features[i].GetType();
+                    
+                    ChangeSystemGroupState(featureType, oldState, true);
+                }
+            }
+            
+            CurrentState = newState;
         }
 
         private static void ChangeSystemGroupState(Type featureType, EcsStatesIds state, bool newState)

@@ -5,6 +5,7 @@ using Code.Data.Ecs.EcsStateMachine;
 using Code.Data.Ecs.EcsStateMachine.Editor.GraphNodes;
 using Code.Logic.CodeGeneration.Editor.Utils;
 using Code.Logic.Ecs.Features;
+using Code.Logic.Ecs.Interfaces;
 using Generated;
 using Leopotam.EcsLite;
 using Unity.GraphToolkit.Editor;
@@ -57,12 +58,15 @@ namespace Code.Logic.Ecs.Editor.GraphImporter
                 Id = StableId.Get(name),
                 DefaultNextState = defaultNextState,
                 PossibleNextStates = possibleNextStates,
-                OnStateEnterSystems = GetBlockData<OnStateEnterSystemsBlockNode, EcsRunSystemsIds, IEcsRunSystem>(
+                OnStateEnterSystems = GetBlockData<OnStateEnterSystemsBlockNode, EcsStateChangeSystemsIds, IEcsStateChangeSystem>(
                     stateNode, 
-                    EcsRunSystemsFactory.Create),
+                    EcsStateChangeSystemsFactory.Create),
                 Features = GetBlockData<FeaturesBlockNode, EcsFeatureIds, EcsFeature>(
                     stateNode, 
                     EcsFeatureFactory.Create),
+                OnStateExitSystems = GetBlockData<OnStateEnterSystemsBlockNode, EcsStateChangeSystemsIds, IEcsStateChangeSystem>(
+                    stateNode, 
+                    EcsStateChangeSystemsFactory.Create)
             };
         }
         

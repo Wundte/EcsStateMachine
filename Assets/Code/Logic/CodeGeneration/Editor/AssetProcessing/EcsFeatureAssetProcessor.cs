@@ -3,6 +3,7 @@ using Code.Logic.CodeGeneration.Editor.Generation.Factories;
 using Code.Logic.CodeGeneration.Editor.Output;
 using Code.Logic.Ecs.Features;
 using UnityEditor;
+using UnityEngine;
 
 namespace Code.Logic.CodeGeneration.Editor.AssetProcessing
 {
@@ -33,6 +34,8 @@ namespace Code.Logic.CodeGeneration.Editor.AssetProcessing
             FileWriter.Write("EcsFeatureFactory.cs", factoryCode);
 
             AssetDatabase.Refresh();
+            
+            Debug.Log("<color=#00C853>EcsFeatureIds and Factory successfully generated</color>");
         }
     }
 }

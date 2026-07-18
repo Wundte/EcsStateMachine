@@ -3,7 +3,7 @@ using System.Text;
 
 namespace Code.Logic.CodeGeneration.Editor.Generation.Factories
 {
-    public sealed class EcsRunSystemFactoryGenerator
+    public sealed class EcsStateChangeSystemsFactoryGenerator
     {
         public static string GenerateFactory(IReadOnlyDictionary<string, string> systems)
         {
@@ -14,20 +14,21 @@ namespace Code.Logic.CodeGeneration.Editor.Generation.Factories
 
             builder.AppendLine("using System;");
             builder.AppendLine("using Leopotam.EcsLite;");
+            builder.AppendLine("using Code.Logic.Ecs.Interfaces;");
             builder.AppendLine();
 
             builder.AppendLine("namespace Generated");
             builder.AppendLine("{");
-            builder.AppendLine("    public static class EcsRunSystemsFactory");
+            builder.AppendLine("    public static class EcsStateChangeSystemsFactory");
             builder.AppendLine("    {");
-            builder.AppendLine("        public static IEcsRunSystem Create(EcsRunSystemsIds id)");
+            builder.AppendLine("        public static IEcsStateChangeSystem Create(EcsStateChangeSystemsIds id)");
             builder.AppendLine("        {");
             builder.AppendLine("            return id switch");
             builder.AppendLine("            {");
 
             foreach (KeyValuePair<string, string> system in systems)
             {
-                builder.Append("                EcsRunSystemsIds.");
+                builder.Append("                EcsStateChangeSystemsIds.");
                 builder.Append(system.Key);
                 builder.Append(" => new ");
                 builder.Append(system.Value);

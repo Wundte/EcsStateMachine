@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Code.Logic.Ecs.Features;
-using Leopotam.EcsLite;
+using Code.Logic.Ecs.Interfaces;
 
 namespace Code.Data.Ecs.EcsStateMachine
 {
@@ -13,7 +13,8 @@ namespace Code.Data.Ecs.EcsStateMachine
         public int DefaultNextState;
         public List<int> PossibleNextStates;
         
-        public List<IEcsRunSystem> OnStateEnterSystems;
+        public List<IEcsStateChangeSystem> OnStateEnterSystems;
         public List<EcsFeature> Features;
+        public List<IEcsStateChangeSystem> OnStateExitSystems;
     }
 }
