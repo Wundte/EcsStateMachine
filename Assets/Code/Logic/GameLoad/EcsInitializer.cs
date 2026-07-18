@@ -55,13 +55,19 @@ namespace Code.Logic.GameLoad
         
         private void SelectSystems(RuntimeEcsStateMachineGraph ecsConfig)
         {
-            var runSystems = _systems[SystemType.Run];
             foreach (var (_, stateNode) in ecsConfig.AllRuntimeStateNodes)
             {
-                // Select run systems
+                var runSystems = _systems[SystemType.Run];
+                
+                // Select state change systems
+                var stateChangeSystems = _systems[SystemType.StateChangeSystems];
                 for (var j = 0; j < stateNode.OnStateEnterSystems.Count; j++)
                 {
-                    runSystems.Add(stateNode.OnStateEnterSystems[j]);
+                    stateChangeSystems.Add(stateNode.OnStateEnterSystems[j]);
+                }
+                for (var j = 0; j < stateNode.OnStateExitSystems.Count; j++)
+                {
+                    stateChangeSystems.Add(stateNode.OnStateEnterSystems[j]);
                 }
                 
                 // Select system groups from features
@@ -85,9 +91,10 @@ namespace Code.Logic.GameLoad
         private void InjectAndInitSystems(List<object> injectParameters)
         {
             var injectArray = injectParameters.ToArray();
-            foreach (var system in _systems)
+            
+            foreach (var systems in _systems)
             {
-                system.Value.Inject(injectArray);
+                systems.Value.Inject(injectArray);
             }
             
             foreach (var systems in _systems)

@@ -3,7 +3,7 @@
     public enum SystemType
     {
         Init = 0,
-        Run = 10,
-        OneShot = 20
+        StateChangeSystems = 10,
+        Run = 20
     }
 }

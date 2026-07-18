@@ -14,7 +14,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
   m_GroupName: Default Local Group
   m_GUID: 9c407f55337e79e42931559c61cd7cc5
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 78a8f4a0be10d2e4bb6621006fa1b652
+    m_Address: Assets/Prefabs/DemoCubes/BlueCube.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DemoPrefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 813af49be1618da4f9533534c5462d07
+    m_Address: Assets/Prefabs/DemoCubes/WhiteCube.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DemoPrefabs
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a87132fffbf6dc44c8850c83af698dfd
+    m_Address: Assets/Prefabs/DemoCubes/GreenCube.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - DemoPrefabs
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: ab0494f09b8956d4ab40aa8930d16720, type: 2}
   m_SchemaSet:

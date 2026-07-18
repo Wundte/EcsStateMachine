@@ -1,8 +1,10 @@
 ﻿using System;
 using Code.Data.Ecs.EcsStateMachine;
+using Cysharp.Threading.Tasks;
 using Generated;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.ExtendedSystems;
+using UnityEngine;
 
 namespace Code.Logic.Services
 {
@@ -41,8 +43,10 @@ namespace Code.Logic.Services
             }
         }
 
-        private static void ChangeState(EcsStatesIds oldState, EcsStatesIds newState)
+        private static async void ChangeState(EcsStatesIds oldState, EcsStatesIds newState)
         {
+            Debug.Log($"Changing state from {oldState} to {newState}");
+            
             if (oldState == newState)
             {
                 return;
@@ -64,13 +68,15 @@ namespace Code.Logic.Services
                     oldStateNode.OnStateExitSystems[i].Run();
                 }
             }
+
+            await UniTask.DelayFrame(1);
             
             if (_ecsStateMachineGraph.AllRuntimeStateNodes.TryGetValue((int)newState, out var newStateNode))
             {
                 // Run on state enter systems
                 for (var i = 0; i < newStateNode.OnStateExitSystems.Count; i++)
                 {
-                    newStateNode.OnStateExitSystems[i].Run();
+                    newStateNode.OnStateEnterSystems[i].Run();
                 }
                 
                 // Activate features for old state

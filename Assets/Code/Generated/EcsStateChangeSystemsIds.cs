@@ -5,6 +5,6 @@ namespace Generated
     public enum EcsStateChangeSystemsIds
     {
         None,
-        StateChangeTest = -589811288,
+        CubesSpawnSystem = 1672032079,
     }
 }

@@ -5,7 +5,9 @@ namespace Generated
     public enum EcsFeatureIds
     {
         None,
-        TestFeature = -101193464,
-        TestFeature2 = -1723935495,
+        BlueCubeMovementFeature = -1285285913,
+        GreenCubeMovementFeature = 1668792565,
+        InputCaptureFeature = 1294076179,
+        WhiteCubeMovementFeature = -1615996759,
     }
 }

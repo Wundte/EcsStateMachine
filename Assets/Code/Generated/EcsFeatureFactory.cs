@@ -11,8 +11,10 @@ namespace Generated
         {
             return id switch
             {
-                EcsFeatureIds.TestFeature => new Code.Logic.Game.TestFeature(),
-                EcsFeatureIds.TestFeature2 => new Code.Demo.Logic.TestFeature2(),
+                EcsFeatureIds.BlueCubeMovementFeature => new Code.Demo.Logic.CubeMovement.BlueCubeMovement.BlueCubeMovementFeature(),
+                EcsFeatureIds.GreenCubeMovementFeature => new Code.Demo.Logic.CubeMovement.GreenCubeMovement.GreenCubeMovementFeature(),
+                EcsFeatureIds.InputCaptureFeature => new Code.Demo.Logic.InputCapture.InputCaptureFeature(),
+                EcsFeatureIds.WhiteCubeMovementFeature => new Code.Demo.Logic.CubeMovement.WhiteCubeMovement.WhiteCubeMovementFeature(),
                 _ => throw new System.ArgumentOutOfRangeException(nameof(id), id, null)
             };
         }

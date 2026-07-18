@@ -12,7 +12,7 @@ namespace Generated
         {
             return id switch
             {
-                EcsStateChangeSystemsIds.StateChangeTest => new Code.Demo.Logic.StateChangeTest(),
+                EcsStateChangeSystemsIds.CubesSpawnSystem => new Code.Demo.Logic.Initialization.CubesSpawnSystem(),
                 _ => throw new ArgumentOutOfRangeException(nameof(id), id, null)
             };
         }
