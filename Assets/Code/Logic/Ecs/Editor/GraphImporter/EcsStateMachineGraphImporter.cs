@@ -5,6 +5,7 @@ using Code.Data.Ecs.EcsStateMachine.Editor.GraphNodes;
 using Code.Logic.CodeGeneration.Editor.Generation.Types;
 using Code.Logic.CodeGeneration.Editor.Output;
 using Code.Logic.CodeGeneration.Editor.SourceGenerationData.Enums;
+using Generated;
 using Unity.GraphToolkit.Editor;
 using UnityEditor.AssetImporters;
 using UnityEngine;
@@ -35,6 +36,15 @@ namespace Code.Logic.Ecs.Editor.GraphImporter
                         Name = stateName,
                         Value = newRuntimeStateNode.Id
                     });
+                }
+            }
+
+            foreach (var (_, node) in runtimeEcsStateMachineGraph.AllRuntimeStateNodes)
+            {
+                if (node.IsDefaultState)
+                {
+                    runtimeEcsStateMachineGraph.DefaulState = (EcsStatesIds)node.Id;
+                    break;
                 }
             }
             

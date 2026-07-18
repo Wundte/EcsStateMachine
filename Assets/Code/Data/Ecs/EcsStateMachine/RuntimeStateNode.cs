@@ -8,6 +8,7 @@ namespace Code.Data.Ecs.EcsStateMachine
     public sealed class RuntimeStateNode
     {
         public int Id;
+        public bool IsDefaultState;
         
         // Use hash code instead of references to circumvent serialization depth limitations.
         public int DefaultNextState;

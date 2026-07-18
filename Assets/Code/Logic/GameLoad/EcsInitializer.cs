@@ -16,9 +16,9 @@ namespace Code.Logic.GameLoad
 {
     public sealed class EcsInitializer : IDisposable
     {
-        private EcsWorld _ecsWorld;
-        
         private readonly Dictionary<SystemType, EcsSystems> _systems = new();
+        
+        private EcsWorld _ecsWorld;
 
         public EcsInitializer(
             List<object> injectParameters, 
@@ -49,6 +49,8 @@ namespace Code.Logic.GameLoad
             var ecsLoop = ecsLoopGameObject.AddComponent<EcsLoop>();
 
             ecsLoop.Init(_systems);
+            
+            GameStateService.SetInitialState();
         }
         
         private void SelectSystems(RuntimeEcsStateMachineGraph ecsConfig)
@@ -74,7 +76,7 @@ namespace Code.Logic.GameLoad
                     var feature = stateNode.Features[j];
                     var id = StateFeaturesIdsService.GetStateId(feature.GetType(), (EcsStatesIds)stateNode.Id);
                     
-                    runSystems.AddGroup(id, true, null, feature);
+                    runSystems.AddGroup(id, false, null, feature);
                 }
             }
         }

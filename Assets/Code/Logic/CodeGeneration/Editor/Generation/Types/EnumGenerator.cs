@@ -15,10 +15,10 @@ namespace Code.Logic.CodeGeneration.Editor.Generation.Types
             builder.AppendLine("{");
             builder.AppendLine($"    public enum {definition.Name}");
             builder.AppendLine("    {");
+            builder.AppendLine($"        None,");
             foreach (var value in definition.Values)
             {
-                builder.AppendLine(
-                    $"        {value.Name} = {value.Value},");
+                builder.AppendLine($"        {value.Name} = {value.Value},");
             }
             builder.AppendLine("    }");
             builder.AppendLine("}");

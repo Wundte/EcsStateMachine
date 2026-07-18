@@ -8,7 +8,7 @@ namespace Code.Logic.Services
 {
     public sealed class GameStateService : IDisposable
     {
-        public static EcsStatesIds CurrentState { get; private set; }
+        public static EcsStatesIds CurrentState { get; private set; } = EcsStatesIds.None;
         
         private static RuntimeEcsStateMachineGraph _ecsStateMachineGraph;
         private static EcsWorld _ecsWorld;
@@ -19,6 +19,11 @@ namespace Code.Logic.Services
             _ecsWorld = ecsWorld;
         }
 
+        public static void SetInitialState()
+        {
+            ChangeState(CurrentState, _ecsStateMachineGraph.DefaulState);
+        }
+        
         public static void NextState()
         {
             var currentStateStateNode = _ecsStateMachineGraph.AllRuntimeStateNodes[(int)CurrentState];
@@ -38,6 +43,11 @@ namespace Code.Logic.Services
 
         private static void ChangeState(EcsStatesIds oldState, EcsStatesIds newState)
         {
+            if (oldState == newState)
+            {
+                return;
+            }
+            
             if (_ecsStateMachineGraph.AllRuntimeStateNodes.TryGetValue((int)oldState, out var oldStateNode))
             {
                 // Deactivate features for old state
@@ -68,7 +78,7 @@ namespace Code.Logic.Services
                 {
                     var featureType  = newStateNode.Features[i].GetType();
                     
-                    ChangeSystemGroupState(featureType, oldState, true);
+                    ChangeSystemGroupState(featureType, newState, true);
                 }
             }
             

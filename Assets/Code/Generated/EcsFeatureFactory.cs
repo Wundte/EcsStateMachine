@@ -12,6 +12,7 @@ namespace Generated
             return id switch
             {
                 EcsFeatureIds.TestFeature => new Code.Logic.Game.TestFeature(),
+                EcsFeatureIds.TestFeature2 => new Code.Demo.Logic.TestFeature2(),
                 _ => throw new System.ArgumentOutOfRangeException(nameof(id), id, null)
             };
         }

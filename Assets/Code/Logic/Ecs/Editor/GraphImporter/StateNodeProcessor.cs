@@ -7,7 +7,6 @@ using Code.Logic.CodeGeneration.Editor.Utils;
 using Code.Logic.Ecs.Features;
 using Code.Logic.Ecs.Interfaces;
 using Generated;
-using Leopotam.EcsLite;
 using Unity.GraphToolkit.Editor;
 
 namespace Code.Logic.Ecs.Editor.GraphImporter
@@ -19,6 +18,7 @@ namespace Code.Logic.Ecs.Editor.GraphImporter
         {
             // Get options
             stateNode.GetNodeOptionByName(StateNode.StateName).TryGetValue(out string name);
+            stateNode.GetNodeOptionByName(StateNode.IsDefaultState).TryGetValue(out bool isDefaultState);
 
             // Process out port
             // Precess default next state out port
@@ -56,6 +56,7 @@ namespace Code.Logic.Ecs.Editor.GraphImporter
             return new RuntimeStateNode
             {
                 Id = StableId.Get(name),
+                IsDefaultState = isDefaultState,
                 DefaultNextState = defaultNextState,
                 PossibleNextStates = possibleNextStates,
                 OnStateEnterSystems = GetBlockData<OnStateEnterSystemsBlockNode, EcsStateChangeSystemsIds, IEcsStateChangeSystem>(

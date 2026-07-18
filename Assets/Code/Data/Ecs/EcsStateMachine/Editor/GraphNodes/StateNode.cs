@@ -7,6 +7,7 @@ namespace Code.Data.Ecs.EcsStateMachine.Editor.GraphNodes
     public sealed class StateNode : ContextNode
     {
         public const string StateName = "StateName";
+        public const string IsDefaultState = "IsDefaultState";
         
         public const string In = "In";
         
@@ -16,6 +17,7 @@ namespace Code.Data.Ecs.EcsStateMachine.Editor.GraphNodes
         protected override void OnDefineOptions(IOptionDefinitionContext context)
         {
             context.AddOption<string>(StateName).Build();
+            context.AddOption<bool>(IsDefaultState).Build();
         }
 
         protected override void OnDefinePorts(IPortDefinitionContext context)
