@@ -8,6 +8,7 @@ using Code.Logic.Ecs.Features;
 using Code.Logic.Ecs.Interfaces;
 using Generated;
 using Unity.GraphToolkit.Editor;
+using UnityEngine;
 
 namespace Code.Logic.Ecs.Editor.GraphImporter
 {
@@ -61,17 +62,23 @@ namespace Code.Logic.Ecs.Editor.GraphImporter
                 PossibleNextStates = possibleNextStates,
                 OnStateEnterSystems = GetBlockData<OnStateEnterSystemsBlockNode, EcsStateChangeSystemsIds, IEcsStateChangeSystem>(
                     stateNode, 
-                    EcsStateChangeSystemsFactory.Create),
+                    EcsStateChangeSystemsFactory.Create,
+                    name),
                 Features = GetBlockData<FeaturesBlockNode, EcsFeatureIds, EcsFeature>(
                     stateNode, 
-                    EcsFeatureFactory.Create),
+                    EcsFeatureFactory.Create,
+                    name),
                 OnStateExitSystems = GetBlockData<OnStateExitSystemBlockNode, EcsStateChangeSystemsIds, IEcsStateChangeSystem>(
                     stateNode, 
-                    EcsStateChangeSystemsFactory.Create)
+                    EcsStateChangeSystemsFactory.Create,
+                    name)
             };
         }
         
-        private static List<TResult> GetBlockData<TBlock, TEnum, TResult>(StateNode stateNode, Func<TEnum, TResult> factory)
+        private static List<TResult> GetBlockData<TBlock, TEnum, TResult>(
+            StateNode stateNode, 
+            Func<TEnum, TResult> factory,
+            string nodeName)
             where TBlock : BlockNode
             where TEnum : struct, Enum
         {
@@ -82,6 +89,7 @@ namespace Code.Logic.Ecs.Editor.GraphImporter
                 return result;
             }
 
+            var blockTypesCounter = new Dictionary<Type, int>();
             foreach (var blockNode in contextNode.BlockNodes)
             {
                 if (blockNode is not TBlock block)
@@ -89,12 +97,24 @@ namespace Code.Logic.Ecs.Editor.GraphImporter
                     continue;
                 }
 
+                var blockType = block.GetType();
+                blockTypesCounter[blockType] = blockTypesCounter.GetValueOrDefault(blockType) + 1;
+
                 foreach (var port in block.GetInputPorts())
                 {
                     if (port.TryGetValue(out TEnum value))
                     {
                         result.Add(factory(value));
                     }
+                }
+            }
+
+            // Duplicate block nodes won't cause any problems, but they are probably not what is intended
+            foreach (var block in blockTypesCounter)
+            {
+                if (block.Value > 1)
+                {
+                    Debug.LogWarning($"{nodeName} State contains duplicate BlockNode of type {block.Key}");
                 }
             }
 
