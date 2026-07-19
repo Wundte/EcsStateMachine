@@ -25,7 +25,7 @@ namespace Code.Logic.GameLoad
                 
                 // Load resources
                 
-                await CreateServices(ecsStateMachineGraph, ecsWorld);
+                CreateServices(ecsStateMachineGraph, ecsWorld);
         
                 // Load scenes (if needed)
                 
@@ -52,7 +52,7 @@ namespace Code.Logic.GameLoad
             return await configsLoaderService.Init();
         }
         
-        private async UniTask CreateServices(RuntimeEcsStateMachineGraph ecsStateMachineGraph, EcsWorld ecsWorld)
+        private void CreateServices(RuntimeEcsStateMachineGraph ecsStateMachineGraph, EcsWorld ecsWorld)
         {
             var stateFeatureIdsService = new StateFeaturesIdsService();
             stateFeatureIdsService.Init(ecsStateMachineGraph);

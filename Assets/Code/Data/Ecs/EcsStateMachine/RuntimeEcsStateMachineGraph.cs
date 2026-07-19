@@ -4,6 +4,8 @@ using Sirenix.OdinInspector;
 
 namespace Code.Data.Ecs.EcsStateMachine
 {
+    #pragma warning disable UAC1009 // Suppress warning from unity serializer 
+    
     [System.Serializable]
     public sealed class RuntimeEcsStateMachineGraph : SerializedScriptableObject
     {

@@ -3,6 +3,7 @@ using Leopotam.EcsLite;
 
 namespace Code.Logic.Ecs.Features
 {
+    [System.Serializable]
     public abstract class EcsFeature
     {
         /// <summary>
