@@ -76,7 +76,7 @@ namespace Code.Logic.GameLoad
                 }
                 for (var j = 0; j < stateNode.OnStateExitSystems.Count; j++)
                 {
-                    stateChangeSystems.Add(stateNode.OnStateEnterSystems[j]);
+                    stateChangeSystems.Add(stateNode.OnStateExitSystems[j]);
                 }
                 
                 // Select system groups from features
