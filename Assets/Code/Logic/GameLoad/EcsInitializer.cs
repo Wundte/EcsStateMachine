@@ -91,15 +91,22 @@ namespace Code.Logic.GameLoad
                     }
                     
                     var feature = stateNode.Features[j];
-                    var id = StateFeaturesIdsService.GetStateId(feature.GetType(), (EcsStatesIds)stateNode.Id);
-
                     var featureSystems = feature.GetSystems();
-                    for (var i = 0; i < featureSystems.Length; i++)
+                    if (featureSystems is not null && featureSystems.Length > 0)
                     {
-                        allFeaturesSystems.Add(featureSystems[i]);
+                        var id = StateFeaturesIdsService.GetStateId(feature.GetType(), (EcsStatesIds)stateNode.Id);
+
+                        for (var i = 0; i < featureSystems.Length; i++)
+                        {
+                            allFeaturesSystems.Add(featureSystems[i]);
+                        }
+
+                        runSystems.AddGroup(id, false, null, featureSystems);
                     }
-                    
-                    runSystems.AddGroup(id, false, null, featureSystems);
+                    else
+                    {
+                        Debug.LogError($"Systems list cant be null or empty for {feature.GetType()}");
+                    }
                 }
             }
         }

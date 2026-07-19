@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using Generated;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.ExtendedSystems;
+using UnityEngine;
 
 namespace Code.Logic.Services
 {
@@ -86,6 +87,8 @@ namespace Code.Logic.Services
             }
             
             CurrentState = newState;
+            
+            Debug.Log($"<color=#00C853>Ecs State changed from {oldState} to {newState}</color>");
         }
 
         private static void ChangeSystemGroupState(Type featureType, EcsStatesIds state, bool newState)
