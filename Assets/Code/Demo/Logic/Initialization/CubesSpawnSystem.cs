@@ -41,7 +41,7 @@ namespace Code.Demo.Logic.Initialization
             for (var i = 0; i < 6; i++)
             {
                 var prefab = prefabs[i % prefabs.Count];
-                var instance = Object.Instantiate(prefab, new Vector3(-3, i * 1.5f, 0), Quaternion.identity);
+                var instance = Object.Instantiate(prefab, new Vector3(-3f, i * 1.5f, 0f), Quaternion.identity);
                 
                 CreateEntity(instance);
             }
@@ -71,11 +71,11 @@ namespace Code.Demo.Logic.Initialization
             
             ref var moveComponent = ref _moveComponentPool.Value.Add(entity);
             moveComponent.Direction = 1f;
-            moveComponent.Speed = 2f;
+            moveComponent.Speed = 4f;
             
             ref var movementBounds = ref _movementBoundsComponentPool.Value.Add(entity);
             movementBounds.MinX = instance.transform.position.x;
-            movementBounds.MaxX = -instance.transform.position.x;
+            movementBounds.MaxX = 10.5f;
         }
     }
 }

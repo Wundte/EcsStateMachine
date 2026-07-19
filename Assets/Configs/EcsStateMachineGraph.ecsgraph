@@ -50,8 +50,8 @@ MonoBehaviour:
           serializedVersion: 2
           x: -2573
           y: -333
-          width: 1219
-          height: 1095
+          width: 1246
+          height: 1129
         m_GraphElementMetaData:
         - m_Guid:
             m_Value0: 12506084263997346554
@@ -323,8 +323,12 @@ MonoBehaviour:
         m_InputConstantsById:
           m_KeyList:
           - __option_NumberOfFeatures
+          - 0
+          - 1
           m_ValueList:
           - rid: 7162829393825366122
+          - rid: 7162829414045843732
+          - rid: 7162829414045843733
         m_InputPortInfos:
           expandedPortsById:
             m_KeyList: []
@@ -345,7 +349,7 @@ MonoBehaviour:
     - rid: 7162829393825366122
       type: {class: 'Constant`1[[System.Int32, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: UnityEditor.GraphToolkitModule}
       data:
-        m_Value: 0
+        m_Value: 2
     - rid: 7162829393825366124
       type: {class: FeaturesBlockNode, ns: Code.Data.Ecs.EcsStateMachine.Editor.GraphNodes, asm: Assembly-CSharp-Editor}
       data: 
@@ -798,3 +802,25 @@ MonoBehaviour:
     - rid: 7162829414045843672
       type: {class: OnStateEnterSystemsBlockNode, ns: Code.Data.Ecs.EcsStateMachine.Editor.GraphNodes, asm: Assembly-CSharp-Editor}
       data: 
+    - rid: 7162829414045843732
+      type: {class: EnumConstant, ns: Unity.GraphToolkit.Editor, asm: UnityEditor.GraphToolkitModule}
+      data:
+        m_Value:
+          m_EnumType:
+            m_Identification: Generated.EcsFeatureIds, Assembly-CSharp, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          m_Value: -1615996759
+        m_EnumType:
+          m_Identification: Generated.EcsFeatureIds, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+    - rid: 7162829414045843733
+      type: {class: EnumConstant, ns: Unity.GraphToolkit.Editor, asm: UnityEditor.GraphToolkitModule}
+      data:
+        m_Value:
+          m_EnumType:
+            m_Identification: Generated.EcsFeatureIds, Assembly-CSharp, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          m_Value: 1294076179
+        m_EnumType:
+          m_Identification: Generated.EcsFeatureIds, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
