@@ -12,9 +12,19 @@ namespace Generated
         {
             return id switch
             {
-                EcsStateChangeSystemsIds.CubesSpawnSystem => new Code.Demo.Logic.Initialization.CubesSpawnSystem(),
+                EcsStateChangeSystemsIds.CubesSpawnSystem => Create("Code.Demo.Logic.Initialization.CubesSpawnSystem"),
                 _ => throw new ArgumentOutOfRangeException(nameof(id), id, null)
             };
+        }
+
+        private static IEcsStateChangeSystem Create(string typeName)
+        {
+            var type = Type.GetType(typeName);
+
+            if (type == null)
+                return null;
+
+            return Activator.CreateInstance(type) as IEcsStateChangeSystem;
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Code.Logic.CodeGeneration.Editor.AssetProcessing
             enumName: "EcsStateChangeSystemsIds",
             enumNamespace: "Generated",
             outputFileName: "EcsStateChangeSystemsIds.cs");
-
+        
         [UnityEditor.Callbacks.DidReloadScripts]
         private static void OnScriptsReloaded()
         {

@@ -11,12 +11,22 @@ namespace Generated
         {
             return id switch
             {
-                EcsFeatureIds.BlueCubeMovementFeature => new Code.Demo.Logic.CubeMovement.BlueCubeMovement.BlueCubeMovementFeature(),
-                EcsFeatureIds.GreenCubeMovementFeature => new Code.Demo.Logic.CubeMovement.GreenCubeMovement.GreenCubeMovementFeature(),
-                EcsFeatureIds.InputCaptureFeature => new Code.Demo.Logic.InputCapture.InputCaptureFeature(),
-                EcsFeatureIds.WhiteCubeMovementFeature => new Code.Demo.Logic.CubeMovement.WhiteCubeMovement.WhiteCubeMovementFeature(),
-                _ => throw new System.ArgumentOutOfRangeException(nameof(id), id, null)
+                EcsFeatureIds.BlueCubeMovementFeature => Create("Code.Demo.Logic.CubeMovement.BlueCubeMovement.BlueCubeMovementFeature"),
+                EcsFeatureIds.GreenCubeMovementFeature => Create("Code.Demo.Logic.CubeMovement.GreenCubeMovement.GreenCubeMovementFeature"),
+                EcsFeatureIds.InputCaptureFeature => Create("Code.Demo.Logic.InputCapture.InputCaptureFeature"),
+                EcsFeatureIds.WhiteCubeMovementFeature => Create("Code.Demo.Logic.CubeMovement.WhiteCubeMovement.WhiteCubeMovementFeature"),
+                _ => throw new ArgumentOutOfRangeException(nameof(id), id, null)
             };
+        }
+
+        private static EcsFeature Create(string typeName)
+        {
+            var type = Type.GetType(typeName);
+
+            if (type == null)
+                return null;
+
+            return Activator.CreateInstance(type) as EcsFeature;
         }
     }
 }

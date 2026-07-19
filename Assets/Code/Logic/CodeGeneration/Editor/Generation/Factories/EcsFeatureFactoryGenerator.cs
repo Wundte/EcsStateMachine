@@ -20,6 +20,7 @@ namespace Code.Logic.CodeGeneration.Editor.Generation.Factories
             builder.AppendLine("{");
             builder.AppendLine("    public static class EcsFeatureFactory");
             builder.AppendLine("    {");
+
             builder.AppendLine("        public static EcsFeature Create(EcsFeatureIds id)");
             builder.AppendLine("        {");
             builder.AppendLine("            return id switch");
@@ -29,14 +30,29 @@ namespace Code.Logic.CodeGeneration.Editor.Generation.Factories
             {
                 builder.Append("                EcsFeatureIds.");
                 builder.Append(feature.Key);
-                builder.Append(" => new ");
+                builder.Append(" => Create(\"");
                 builder.Append(feature.Value);
-                builder.AppendLine("(),");
+                builder.AppendLine("\"),");
             }
 
-            builder.AppendLine("                _ => throw new System.ArgumentOutOfRangeException(nameof(id), id, null)");
+            builder.AppendLine("                _ => throw new ArgumentOutOfRangeException(nameof(id), id, null)");
             builder.AppendLine("            };");
             builder.AppendLine("        }");
+
+            builder.AppendLine();
+
+            builder.AppendLine("        private static EcsFeature Create(string typeName)");
+            builder.AppendLine("        {");
+            builder.AppendLine("            var type = Type.GetType(typeName);");
+            builder.AppendLine();
+
+            builder.AppendLine("            if (type == null)");
+            builder.AppendLine("                return null;");
+            builder.AppendLine();
+
+            builder.AppendLine("            return Activator.CreateInstance(type) as EcsFeature;");
+            builder.AppendLine("        }");
+
             builder.AppendLine("    }");
             builder.AppendLine("}");
 
