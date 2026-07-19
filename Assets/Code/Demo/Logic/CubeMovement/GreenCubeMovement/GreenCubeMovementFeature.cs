@@ -1,12 +1,16 @@
 ﻿using Code.Logic.Ecs.Features;
+using Leopotam.EcsLite;
 
 namespace Code.Demo.Logic.CubeMovement.GreenCubeMovement
 {
     public sealed class GreenCubeMovementFeature : EcsFeature
     {
-        public override void Init()
+        public override IEcsSystem[] GetSystems()
         {
-            _systems.Add(new GreenCubeMovementSystem());
+            return new IEcsSystem[]
+            {
+                new GreenCubeMovementSystem(),
+            };
         }
     }
 }

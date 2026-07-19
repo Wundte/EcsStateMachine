@@ -16,8 +16,6 @@ namespace Code.Demo.Logic.CubeMovement.GreenCubeMovement
         
         public void Run(EcsSystems systems)
         {
-            Debug.Log($"IN");
-            
             foreach (var entity in _filter.Value)
             {
                 ref var transformComponent = ref _transformComponentPool.Value.Get(entity);

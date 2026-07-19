@@ -4,7 +4,6 @@ using Cysharp.Threading.Tasks;
 using Generated;
 using Leopotam.EcsLite;
 using Leopotam.EcsLite.ExtendedSystems;
-using UnityEngine;
 
 namespace Code.Logic.Services
 {
@@ -45,8 +44,6 @@ namespace Code.Logic.Services
 
         private static async void ChangeState(EcsStatesIds oldState, EcsStatesIds newState)
         {
-            Debug.Log($"Changing state from {oldState} to {newState}");
-            
             if (oldState == newState)
             {
                 return;
@@ -74,7 +71,7 @@ namespace Code.Logic.Services
             if (_ecsStateMachineGraph.AllRuntimeStateNodes.TryGetValue((int)newState, out var newStateNode))
             {
                 // Run on state enter systems
-                for (var i = 0; i < newStateNode.OnStateExitSystems.Count; i++)
+                for (var i = 0; i < newStateNode.OnStateEnterSystems.Count; i++)
                 {
                     newStateNode.OnStateEnterSystems[i].Run();
                 }

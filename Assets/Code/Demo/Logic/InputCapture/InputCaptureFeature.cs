@@ -1,12 +1,16 @@
 ﻿using Code.Logic.Ecs.Features;
+using Leopotam.EcsLite;
 
 namespace Code.Demo.Logic.InputCapture
 {
     public sealed class InputCaptureFeature : EcsFeature
     {
-        public override void Init()
+        public override IEcsSystem[] GetSystems()
         {
-            _systems.Add(new StateChangeInputCaptureSystem());
+            return new IEcsSystem[]
+            {
+                new StateChangeInputCaptureSystem(),
+            };
         }
     }
 }

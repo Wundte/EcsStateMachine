@@ -8,16 +8,16 @@ namespace Code.Logic.Ecs
     [DisallowMultipleComponent]
     public sealed class EcsLoop : MonoBehaviour
     {
-        private Dictionary<SystemType, EcsSystems> _systems;
+        private EcsSystems _updateSystems;
         
-        public void Init(Dictionary<SystemType, EcsSystems> systems)
+        public void Init(Dictionary<int, EcsSystems> systems)
         {
-            _systems = systems;
+            _updateSystems = systems[(int)SystemType.Run];
         }
         
         private void Update()
         {
-            _systems[SystemType.Run].Run();
+            _updateSystems.Run();
         }
     }
 }

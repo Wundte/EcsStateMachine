@@ -65,7 +65,7 @@ namespace Code.Logic.Ecs.Editor.GraphImporter
                 Features = GetBlockData<FeaturesBlockNode, EcsFeatureIds, EcsFeature>(
                     stateNode, 
                     EcsFeatureFactory.Create),
-                OnStateExitSystems = GetBlockData<OnStateEnterSystemsBlockNode, EcsStateChangeSystemsIds, IEcsStateChangeSystem>(
+                OnStateExitSystems = GetBlockData<OnStateExitSystemBlockNode, EcsStateChangeSystemsIds, IEcsStateChangeSystem>(
                     stateNode, 
                     EcsStateChangeSystemsFactory.Create)
             };
