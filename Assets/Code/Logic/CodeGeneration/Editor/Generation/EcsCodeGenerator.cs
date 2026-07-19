@@ -16,19 +16,16 @@ namespace Code.Logic.CodeGeneration.Editor.Generation
     {
         private readonly string enumName;
         private readonly string enumNamespace;
-        private readonly Func<Type, string> getEnumValueName;
         private readonly string outputFileName;
 
         public EcsCodeGenerator(
             string enumName,
             string enumNamespace,
-            string outputFileName,
-            Func<Type, string> getEnumValueName = null)
+            string outputFileName)
         {
             this.enumName = enumName;
             this.enumNamespace = enumNamespace;
             this.outputFileName = outputFileName;
-            this.getEnumValueName = getEnumValueName ?? (type => type.Name);
         }
 
         /// <summary>
@@ -38,6 +35,7 @@ namespace Code.Logic.CodeGeneration.Editor.Generation
         {
             var values = new List<EnumValue>();
             var generatedIds = new Dictionary<int, string>();
+            var nameCounts = GetNameCounts(types);
 
             foreach (var type in types)
             {
@@ -53,7 +51,7 @@ namespace Code.Logic.CodeGeneration.Editor.Generation
 
                 values.Add(new EnumValue
                 {
-                    Name = getEnumValueName(type),
+                    Name = GetGeneratedName(type, nameCounts),
                     Value = id
                 });
             }
@@ -88,11 +86,14 @@ namespace Code.Logic.CodeGeneration.Editor.Generation
         public static Dictionary<string, string> CreateTypeMap(List<Type> types)
         {
             var result = new Dictionary<string, string>();
+            var nameCounts = GetNameCounts(types);
 
             foreach (var type in types)
             {
+                var name = GetGeneratedName(type, nameCounts);
                 var fullName = type.FullName ?? type.Name;
-                result.Add(type.Name, fullName);
+
+                result.Add(name, fullName);
             }
 
             return result;
@@ -103,12 +104,30 @@ namespace Code.Logic.CodeGeneration.Editor.Generation
         /// </summary>
         public void WriteEnum(EnumDefinition enumDef)
         {
-            var enumCode = Generation.Types.EnumGenerator.GenerateEnum(enumDef);
+            var enumCode = Types.EnumGenerator.GenerateEnum(enumDef);
             FileWriter.Write(outputFileName, enumCode);
+        }
+
+        private static Dictionary<string, int> GetNameCounts(List<Type> types)
+        {
+            return types
+                .GroupBy(t => t.Name)
+                .ToDictionary(
+                    group => group.Key,
+                    group => group.Count()
+                );
+        }
+
+        private static string GetGeneratedName(Type type, Dictionary<string, int> nameCounts)
+        {
+            if (nameCounts[type.Name] == 1)
+            {
+                return type.Name;
+            }
+
+            var namespaceSuffix = type.Namespace?.Split('.').LastOrDefault() ?? "Global";
+            
+            return $"{namespaceSuffix}{type.Name}";
         }
     }
 }
-
-
-
-
