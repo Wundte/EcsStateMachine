@@ -104,7 +104,11 @@ namespace Code.Logic.Ecs.Editor.GraphImporter
                 {
                     if (port.TryGetValue(out TEnum value))
                     {
-                        result.Add(factory(value));
+                        var product = factory(value);
+                        if (product != null)
+                        {
+                            result.Add(product);
+                        }
                     }
                 }
             }

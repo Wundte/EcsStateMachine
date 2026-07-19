@@ -26,6 +26,8 @@ namespace Code.Logic.CodeGeneration.Editor.Generation.Factories
             builder.AppendLine("            return id switch");
             builder.AppendLine("            {");
 
+            builder.AppendLine("                EcsFeatureIds.None => null,");
+
             foreach (KeyValuePair<string, string> feature in features)
             {
                 builder.Append("                EcsFeatureIds.");
@@ -47,10 +49,12 @@ namespace Code.Logic.CodeGeneration.Editor.Generation.Factories
             builder.AppendLine();
 
             builder.AppendLine("            if (type == null)");
-            builder.AppendLine("                return null;");
+            builder.AppendLine("            {");
+            builder.AppendLine("                throw new InvalidOperationException($\"Feature type not found: {typeName}\");");
+            builder.AppendLine("            }");
             builder.AppendLine();
 
-            builder.AppendLine("            return Activator.CreateInstance(type) as EcsFeature;");
+            builder.AppendLine("            return (EcsFeature)Activator.CreateInstance(type);");
             builder.AppendLine("        }");
 
             builder.AppendLine("    }");

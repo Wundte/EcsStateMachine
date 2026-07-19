@@ -11,6 +11,7 @@ namespace Generated
         {
             return id switch
             {
+                EcsFeatureIds.None => null,
                 EcsFeatureIds.BlueCubeMovementFeature => Create("Code.Demo.Logic.CubeMovement.BlueCubeMovement.BlueCubeMovementFeature"),
                 EcsFeatureIds.GreenCubeMovementFeature => Create("Code.Demo.Logic.CubeMovement.GreenCubeMovement.GreenCubeMovementFeature"),
                 EcsFeatureIds.InputCaptureFeature => Create("Code.Demo.Logic.InputCapture.InputCaptureFeature"),
@@ -24,9 +25,11 @@ namespace Generated
             var type = Type.GetType(typeName);
 
             if (type == null)
-                return null;
+            {
+                throw new InvalidOperationException($"Feature type not found: {typeName}");
+            }
 
-            return Activator.CreateInstance(type) as EcsFeature;
+            return (EcsFeature)Activator.CreateInstance(type);
         }
     }
 }

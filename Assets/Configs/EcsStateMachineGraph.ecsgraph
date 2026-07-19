@@ -48,10 +48,10 @@ MonoBehaviour:
         m_LocalSubgraphs: []
         m_LastKnownBounds:
           serializedVersion: 2
-          x: -2536
-          y: -419
-          width: 1182
-          height: 1181
+          x: -2627
+          y: -371
+          width: 1273
+          height: 1133
         m_GraphElementMetaData:
         - m_Guid:
             m_Value0: 12506084263997346554
@@ -154,7 +154,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: a3a97ce56784931395c4ed6ac8aa2ac7
         m_Version: 2
-        m_Position: {x: -2600.3193, y: -390.4173}
+        m_Position: {x: -2627.3193, y: -371.4173}
         m_Title: 
         m_Tooltip: 
         m_NodePreviewModel:
@@ -182,13 +182,10 @@ MonoBehaviour:
           m_HasUserColor: 0
         m_Blocks:
         - rid: 7162829414045843669
-        - rid: 7162829393825366205
         - rid: 7162829393825366117
         m_BlockGuids:
         - serializedVersion: 2
           Hash: 165c5bbe669a3bd86e5adf32bda14558
-        - serializedVersion: 2
-          Hash: 8de5f3e30317e7bea6422b34d77ba649
         - serializedVersion: 2
           Hash: 11a96c7d91ed6195959882ee0dc9e066
         m_Subtitle: 
@@ -582,64 +579,6 @@ MonoBehaviour:
     - rid: 7162829393825366193
       type: {class: FeaturesBlockNode, ns: Code.Data.Ecs.EcsStateMachine.Editor.GraphNodes, asm: Assembly-CSharp-Editor}
       data: 
-    - rid: 7162829393825366205
-      type: {class: UserBlockNodeModelImp, ns: Unity.GraphToolkit.Editor.Implementation, asm: UnityEditor.GraphToolkitModule}
-      data:
-        m_Guid:
-          m_Value0: 13755988892303222157
-          m_Value1: 5307065375126143654
-        m_HashGuid:
-          serializedVersion: 2
-          Hash: 8de5f3e30317e7bea6422b34d77ba649
-        m_Version: 2
-        m_Position: {x: 0, y: 0}
-        m_Title: 
-        m_Tooltip: 
-        m_NodePreviewModel:
-          rid: -2
-        m_State: 0
-        m_InputConstantsById:
-          m_KeyList:
-          - __option_NumberOfSystem
-          - 0
-          m_ValueList:
-          - rid: 7162829393825366206
-          - rid: 7162829393825366207
-        m_InputPortInfos:
-          expandedPortsById:
-            m_KeyList: []
-            m_ValueList: 
-        m_OutputPortInfos:
-          expandedPortsById:
-            m_KeyList: []
-            m_ValueList: 
-        m_Collapsed: 0
-        m_CurrentModeIndex: 0
-        m_ElementColor:
-          m_Color: {r: 0, g: 0, b: 0, a: 0}
-          m_HasUserColor: 0
-        m_ContextNodeModel:
-          rid: 7162829345424670833
-        m_Node:
-          rid: 7162829393825366208
-    - rid: 7162829393825366206
-      type: {class: 'Constant`1[[System.Int32, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: UnityEditor.GraphToolkitModule}
-      data:
-        m_Value: 1
-    - rid: 7162829393825366207
-      type: {class: EnumConstant, ns: Unity.GraphToolkit.Editor, asm: UnityEditor.GraphToolkitModule}
-      data:
-        m_Value:
-          m_EnumType:
-            m_Identification: Generated.EcsStateChangeSystemsIds, Assembly-CSharp,
-              Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-          m_Value: 1672032079
-        m_EnumType:
-          m_Identification: Generated.EcsStateChangeSystemsIds, Assembly-CSharp,
-            Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    - rid: 7162829393825366208
-      type: {class: OnStateEnterSystemsBlockNode, ns: Code.Data.Ecs.EcsStateMachine.Editor.GraphNodes, asm: Assembly-CSharp-Editor}
-      data: 
     - rid: 7162829393825366279
       type: {class: EnumConstant, ns: Unity.GraphToolkit.Editor, asm: UnityEditor.GraphToolkitModule}
       data:
@@ -852,7 +791,7 @@ MonoBehaviour:
           m_EnumType:
             m_Identification: Generated.EcsStateChangeSystemsIds, Assembly-CSharp,
               Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-          m_Value: 1672032079
+          m_Value: 0
         m_EnumType:
           m_Identification: Generated.EcsStateChangeSystemsIds, Assembly-CSharp,
             Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
