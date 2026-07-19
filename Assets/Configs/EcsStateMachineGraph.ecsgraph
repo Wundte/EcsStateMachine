@@ -154,7 +154,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: a3a97ce56784931395c4ed6ac8aa2ac7
         m_Version: 2
-        m_Position: {x: -2627.3193, y: -371.4173}
+        m_Position: {x: -2566.3193, y: -321.4173}
         m_Title: 
         m_Tooltip: 
         m_NodePreviewModel:
@@ -791,7 +791,7 @@ MonoBehaviour:
           m_EnumType:
             m_Identification: Generated.EcsStateChangeSystemsIds, Assembly-CSharp,
               Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-          m_Value: 0
+          m_Value: 1672032079
         m_EnumType:
           m_Identification: Generated.EcsStateChangeSystemsIds, Assembly-CSharp,
             Version=0.0.0.0, Culture=neutral, PublicKeyToken=null

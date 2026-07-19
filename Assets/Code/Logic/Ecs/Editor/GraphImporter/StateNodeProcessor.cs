@@ -104,10 +104,17 @@ namespace Code.Logic.Ecs.Editor.GraphImporter
                 {
                     if (port.TryGetValue(out TEnum value))
                     {
-                        var product = factory(value);
-                        if (product != null)
+                        if (Enum.IsDefined(typeof(TEnum), value))
                         {
-                            result.Add(product);
+                            var product = factory(value);
+                            if (product != null)
+                            {
+                                result.Add(product);
+                            }
+                        }
+                        else
+                        {
+                            Debug.LogWarning($"{nodeName} State contains empty field");
                         }
                     }
                 }
