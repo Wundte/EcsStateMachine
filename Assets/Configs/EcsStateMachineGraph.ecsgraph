@@ -49,9 +49,9 @@ MonoBehaviour:
         m_LastKnownBounds:
           serializedVersion: 2
           x: 285
-          y: 188
-          width: 1589
-          height: 1348
+          y: 190
+          width: 1598
+          height: 1346
         m_GraphElementMetaData:
         - m_Guid:
             m_Value0: 16431315176355495404
@@ -314,7 +314,7 @@ MonoBehaviour:
           serializedVersion: 2
           Hash: e0e3b6a3b70df362c5d731b048e4bc75
         m_Version: 2
-        m_Position: {x: 1593.0662, y: 965.8011}
+        m_Position: {x: 1601.8113, y: 962.3031}
         m_Title: 
         m_Tooltip: 
         m_NodePreviewModel:
@@ -766,10 +766,12 @@ MonoBehaviour:
           - __option_NumberOfFeatures
           - 0
           - 1
+          - 2
           m_ValueList:
           - rid: 7162829436797845758
           - rid: 7162829436797845759
           - rid: 7162829436797845761
+          - rid: 7162829436797845774
         m_InputPortInfos:
           expandedPortsById:
             m_KeyList: []
@@ -790,7 +792,7 @@ MonoBehaviour:
     - rid: 7162829436797845758
       type: {class: 'Constant`1[[System.Int32, mscorlib]]', ns: Unity.GraphToolkit.Editor, asm: UnityEditor.GraphToolkitModule}
       data:
-        m_Value: 2
+        m_Value: 3
     - rid: 7162829436797845759
       type: {class: EnumConstant, ns: Unity.GraphToolkit.Editor, asm: UnityEditor.GraphToolkitModule}
       data:
@@ -806,6 +808,17 @@ MonoBehaviour:
       type: {class: FeaturesBlockNode, ns: Code.EcsStateMachine.Data.Editor.GraphNodes, asm: Assembly-CSharp-Editor}
       data: 
     - rid: 7162829436797845761
+      type: {class: EnumConstant, ns: Unity.GraphToolkit.Editor, asm: UnityEditor.GraphToolkitModule}
+      data:
+        m_Value:
+          m_EnumType:
+            m_Identification: Generated.EcsFeatureIds, Assembly-CSharp, Version=0.0.0.0,
+              Culture=neutral, PublicKeyToken=null
+          m_Value: -1615996759
+        m_EnumType:
+          m_Identification: Generated.EcsFeatureIds, Assembly-CSharp, Version=0.0.0.0,
+            Culture=neutral, PublicKeyToken=null
+    - rid: 7162829436797845774
       type: {class: EnumConstant, ns: Unity.GraphToolkit.Editor, asm: UnityEditor.GraphToolkitModule}
       data:
         m_Value:

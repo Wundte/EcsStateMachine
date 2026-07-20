@@ -75,13 +75,14 @@ namespace Code.EcsStateMachine.Logic.Editor.GraphImporter
         }
         
         private static List<TResult> GetBlockData<TBlock, TEnum, TResult>(
-            StateNode stateNode, 
+            StateNode stateNode,
             Func<TEnum, TResult> factory,
             string nodeName)
             where TBlock : BlockNode
             where TEnum : struct, Enum
         {
             var result = new List<TResult>();
+            var addedTypes = new HashSet<Type>();
 
             if (stateNode is not ContextNode contextNode)
             {
@@ -89,6 +90,7 @@ namespace Code.EcsStateMachine.Logic.Editor.GraphImporter
             }
 
             var blockTypesCounter = new Dictionary<Type, int>();
+
             foreach (var blockNode in contextNode.BlockNodes)
             {
                 if (blockNode is not TBlock block)
@@ -101,21 +103,34 @@ namespace Code.EcsStateMachine.Logic.Editor.GraphImporter
 
                 foreach (var port in block.GetInputPorts())
                 {
-                    if (port.TryGetValue(out TEnum value))
+                    if (!port.TryGetValue(out TEnum value))
                     {
-                        if (Enum.IsDefined(typeof(TEnum), value))
-                        {
-                            var product = factory(value);
-                            if (product != null)
-                            {
-                                result.Add(product);
-                            }
-                        }
-                        else
-                        {
-                            Debug.LogWarning($"{nodeName} State contains empty field");
-                        }
+                        continue;
                     }
+
+                    if (!Enum.IsDefined(typeof(TEnum), value))
+                    {
+                        Debug.LogWarning($"{nodeName} State contains empty field.");
+                        continue;
+                    }
+
+                    var product = factory(value);
+
+                    if (product == null)
+                    {
+                        continue;
+                    }
+
+                    var productType = product.GetType();
+
+                    // We check for adding duplicates systems or features, they won't cause any problems, but are probably not what is intended
+                    if (!addedTypes.Add(productType))
+                    {
+                        Debug.LogWarning($"{nodeName} State contains duplicate {productType.Name}. Duplicates won't be added to ECS schedule.");
+                        continue;
+                    }
+
+                    result.Add(product);
                 }
             }
 
@@ -124,7 +139,7 @@ namespace Code.EcsStateMachine.Logic.Editor.GraphImporter
             {
                 if (block.Value > 1)
                 {
-                    Debug.LogWarning($"{nodeName} State contains duplicate BlockNode of type {block.Key}");
+                    Debug.LogWarning($"{nodeName} State contains duplicate BlockNode of type {block.Key.Name}.");
                 }
             }
 

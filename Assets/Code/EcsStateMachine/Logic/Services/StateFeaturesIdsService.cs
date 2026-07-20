@@ -21,7 +21,7 @@ namespace Code.EcsStateMachine.Logic.Services
                 var stateId = (EcsStatesIds)stateNode.Id;
                 foreach (var feature in stateNode.Features)
                 {
-                    Ids.Add((feature.GetType(), stateId), $"ID_{feature.GetType().Name}_{stateId}");
+                    Ids.TryAdd((feature.GetType(), stateId), $"ID_{feature.GetType().Name}_{stateId}");
                 }
             }
         }
