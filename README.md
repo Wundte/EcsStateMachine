@@ -8,7 +8,7 @@ Create gameplay states using Unity Graph Toolkit, organize systems into reusable
 
 Demo show how state transitions and executing systems can be changed on the fly. 
 
-![ECS State Machine Demo](Documentation/Images/demo.gif)
+![ECS State Machine Demo](Documentation/GIF/demo.gif)
 
 ## Overview
 
