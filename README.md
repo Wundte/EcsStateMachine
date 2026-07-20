@@ -20,7 +20,7 @@ The system allows you to:
 
 Graph example:
 ![Graph Editor](Documentation/Images/graph.png)
-Node example:
+Node example:<br>
 ![Graph Editor](Documentation/Images/node.png)
 
 Each state node represents an ECS state and can contain:
@@ -283,10 +283,8 @@ This avoids Unity serialization depth limitations and allows cyclic graphs:
 
 ```text
 State A
-  |
   v
 State B
-  |
   v
 State A
 ```
@@ -373,7 +371,7 @@ They execute only once during transitions instead of every frame.
 
 ## Requirements
 
-- Unity 6+
+- Unity 6.5+
 - LeoEcsLite
 - LeoEcsLite.ExtendedSystems
 - LeoEcsLite.Di
