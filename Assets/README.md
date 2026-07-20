@@ -1,47 +1,97 @@
 ﻿# ECS State Machine
 
-Graph-based state machine built on top of **LeoEcsLite**.
+Visual state management system for Unity ECS projects built on **LeoEcsLite**.
 
-The package allows configuring ECS states visually using Unity Graph Toolkit, automatically generating required identifiers and factories, and controlling system execution through state transitions.
+Create gameplay states using Unity Graph Toolkit, organize systems into reusable features, and control ECS execution flow through a state-driven architecture.
 
-## Features
+![ECS State Machine](Documentation~/Images/state-machine-graph.png)
 
-- Visual state machine editor based on Unity Graph Toolkit
-- ECS-oriented architecture
-- LeoEcsLite integration
-- Feature-based system activation
-- State enter / exit systems
-- Runtime graph generation
-- Automatic enum and factory generation
-- Stable identifiers for states and systems
-- Unity serialization friendly graph format
-- Dependency injection support through LeoEcsLite DI
+## Overview
 
-## Architecture Overview
+ECS State Machine provides a visual workflow for managing complex gameplay states in Unity.
 
-The state machine consists of three main parts:
+The system allows you to:
+
+- create states and transitions using Unity Graph Toolkit;
+- assign ECS features to states;
+- configure systems executed on state enter and exit;
+- generate required identifiers and factories automatically;
+- convert graph data into optimized runtime representation.
+
+## Graph Editor
+
+![Graph Editor](Documentation~/Images/graph-editor.png)
+
+Each state node represents an ECS state and can contain:
+
+- Features
+- On State Enter systems
+- On State Exit systems
+- State transitions
+
+Example:
 
 ```text
-Editor Graph
-      |
-      v
+Battle State
+
+On Enter:
+    SpawnSystem
+    InitializeBattleSystem
+
+Features:
+    MovementFeature
+    CombatFeature
+    AIFeature
+
+On Exit:
+    CleanupSystem
+```
+
+## Architecture
+
+![Architecture](Documentation~/Images/architecture.png)
+
+The system pipeline:
+
+```text
+Unity Graph Toolkit
+
+        |
+        v
+
+ECS State Machine Graph
+
+        |
+        v
+
 Graph Importer
-      |
-      v
-Runtime Graph
-      |
-      v
+
+        |
+        v
+
+Runtime Graph Asset
+
+        |
+        v
+
 ECS Initialization
-      |
-      v
+
+        |
+        v
+
 Runtime State Service
+
+        |
+        v
+
+Active ECS Systems
 ```
 
 ## Core Concepts
 
 ### State
 
-A state represents an ECS gameplay state.
+A state represents a gameplay state in ECS.
 
 Examples:
 
@@ -51,33 +101,18 @@ Examples:
 - Reward Screen
 - Loading
 
-Each state can contain:
+Each state can define:
 
-- Enter systems
-- Exit systems
-- Active features
-- Allowed transitions
+- systems executed when entering;
+- systems executed when leaving;
+- active feature groups;
+- possible transitions.
 
-Example:
-
-```text
-Battle State
-
-On Enter:
-    SpawnSystem
-    SetupBattleSystem
-
-Features:
-    MovementFeature
-    CombatFeature
-
-On Exit:
-    CleanupBattleSystem
-```
+---
 
 ### Feature
 
-A feature is a group of ECS systems that are activated together after a state becomes active.
+A feature is a group of ECS systems activated together when a state becomes active.
 
 Example:
 
@@ -96,9 +131,7 @@ public sealed class CombatFeature : EcsFeature
 }
 ```
 
-When activated, all systems inside the feature are added to the ECS execution group.
-
-Example:
+A feature groups related gameplay logic:
 
 ```text
 CombatFeature
@@ -108,33 +141,37 @@ CombatFeature
     DeathSystem
 ```
 
+Features are enabled and disabled automatically during state changes.
+
+---
+
 ### State Change Systems
 
-State change systems are executed during transitions.
+State change systems are executed only during transitions.
 
-Two types exist:
+There are two types:
 
-**Enter Systems**
+#### Enter Systems
 
 Executed when entering a state.
 
 Example:
 
 ```text
-BattleState Enter
+Battle State Enter
 
 SpawnEnemiesSystem
 InitializeBattleSystem
 ```
 
-**Exit Systems**
+#### Exit Systems
 
 Executed before leaving a state.
 
 Example:
 
 ```text
-BattleState Exit
+Battle State Exit
 
 SaveResultSystem
 CleanupBattleSystem
@@ -176,9 +213,9 @@ When the state machine starts:
 8. Start ECS loop
 ```
 
-### State Transition Flow
+### State Transition
 
-When changing state:
+State change flow:
 
 ```text
 Old State
@@ -186,12 +223,12 @@ Old State
     |
     v
 
-Disable old features
+Disable old Features
 
     |
     v
 
-Run OnStateExit Systems
+Run Exit Systems
 
     |
     v
@@ -201,12 +238,12 @@ Wait one frame
     |
     v
 
-Run OnStateEnter Systems
+Run Enter Systems
 
     |
     v
 
-Enable new features
+Enable new Features
 
     |
     v
@@ -216,7 +253,7 @@ New State
 
 ## Code Generation
 
-The package automatically generates:
+The system automatically generates:
 
 ### State IDs
 
@@ -250,7 +287,7 @@ Used for selecting features inside graph nodes.
 EcsStateChangeSystemsIds
 ```
 
-Used for selecting enter/exit systems.
+Used for selecting enter and exit systems.
 
 ### Factories
 
@@ -262,52 +299,47 @@ EcsFeatureFactory
 EcsStateChangeSystemsFactory
 ```
 
-They allow creating ECS objects from generated identifiers.
+Factories create ECS objects from generated identifiers.
 
 ## Stable IDs
 
-The package does not use enum indexes for runtime references.
+Runtime references are not based on enum indexes.
 
-Instead, IDs are generated from names:
+Instead, identifiers are generated from type or state names:
 
 ```text
-State Name
-      |
-      v
-StableId
-      |
-      v
+Name
+
+ |
+
+ v
+
+Stable Hash
+
+ |
+
+ v
+
 Integer ID
 ```
 
-Example:
+This provides:
 
-```text
-Battle
-   |
-   v
-123456789
-```
-
-This allows:
-
-- Persistent references
-- Graph serialization
-- No dependency on enum ordering
+- persistent references;
+- safe graph serialization;
+- no dependency on enum order.
 
 ## Runtime Data
 
-Runtime graph does not store direct references between states.
+Runtime graph stores references using generated IDs instead of direct object references.
 
-Instead:
+Example:
 
 ```csharp
 public int DefaultNextState;
 
 public List<int> PossibleNextStates;
 ```
-
-contain stable state identifiers.
 
 This avoids Unity serialization depth limitations and allows cyclic graphs:
 
@@ -339,7 +371,7 @@ public sealed class MovementFeature : EcsFeature
 }
 ```
 
-After code generation the feature becomes available inside graph editor.
+After code generation the feature becomes available in the graph editor.
 
 ## Creating State Change System
 
@@ -359,17 +391,17 @@ The system becomes available after regeneration.
 
 ## Design Decisions
 
-### Why dictionary instead of references?
+### Why use dictionaries instead of references?
 
 Unity has serialization depth limitations.
 
-Using:
+Runtime graph uses:
 
 ```csharp
 Dictionary<int, RuntimeStateNode>
 ```
 
-allows storing cyclic graphs safely.
+This allows storing cyclic graphs safely.
 
 ### Why Features?
 
@@ -383,7 +415,7 @@ Battle State
 50 systems
 ```
 
-we have:
+the state contains:
 
 ```text
 Battle State
@@ -399,16 +431,7 @@ This improves scalability and readability.
 
 State transitions are different from regular ECS update logic.
 
-They execute only once during transition:
-
-```text
-Enter State
-    |
-    v
-Execute initialization logic
-```
-
-instead of every frame.
+They execute only once during transitions instead of every frame.
 
 ## Requirements
 
