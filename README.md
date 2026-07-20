@@ -4,8 +4,6 @@ Visual state management system for Unity ECS projects built on **LeoEcsLite**.
 
 Create gameplay states using Unity Graph Toolkit, organize systems into reusable features, and control ECS execution flow through a state-driven architecture.
 
-![ECS State Machine](Documentation~/Images/state-machine-graph.png)
-
 ## Overview
 
 ECS State Machine provides a visual workflow for managing complex gameplay states in Unity.
@@ -20,7 +18,10 @@ The system allows you to:
 
 ## Graph Editor
 
+Graph example:
 ![Graph Editor](Documentation/Images/graph.png)
+Node example:
+![Graph Editor](Documentation/Images/node.png)
 
 Each state node represents an ECS state and can contain:
 
@@ -45,46 +46,6 @@ Features:
 
 On Exit:
     CleanupSystem
-```
-
-## Architecture
-
-![Architecture](Documentation~/Images/architecture.png)
-
-The system pipeline:
-
-```text
-Unity Graph Toolkit
-
-        |
-        v
-
-ECS State Machine Graph
-
-        |
-        v
-
-Graph Importer
-
-        |
-        v
-
-Runtime Graph Asset
-
-        |
-        v
-
-ECS Initialization
-
-        |
-        v
-
-Runtime State Service
-
-        |
-        v
-
-Active ECS Systems
 ```
 
 ## Core Concepts
@@ -219,35 +180,17 @@ State change flow:
 
 ```text
 Old State
-
-    |
     v
-
 Disable old Features
-
-    |
     v
-
 Run Exit Systems
-
-    |
     v
-
 Wait one frame
-
-    |
     v
-
 Run Enter Systems
-
-    |
     v
-
 Enable new Features
-
-    |
     v
-
 New State
 ```
 
@@ -272,8 +215,10 @@ public enum EcsStatesIds
     Battle = 789123
 }
 ```
+Used for setting certain states from game code. 
 
 ### Feature IDs
+After creating new Feature code will be regenerated and Feature will become available in the graph editor. 
 
 ```text
 EcsFeatureIds
@@ -282,12 +227,13 @@ EcsFeatureIds
 Used for selecting features inside graph nodes.
 
 ### State Change System IDs
+After creating new IEcsStateChangeSystem code will be regenerated and Feature will become available in the graph editor. 
 
 ```text
 EcsStateChangeSystemsIds
 ```
 
-Used for selecting enter and exit systems.
+Used for selecting enter and exit systems inside graph nodes.
 
 ### Factories
 
@@ -309,17 +255,9 @@ Instead, identifiers are generated from type or state names:
 
 ```text
 Name
-
- |
-
  v
-
 Stable Hash
-
- |
-
  v
-
 Integer ID
 ```
 
