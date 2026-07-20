@@ -5,11 +5,17 @@ using UnityEngine;
 
 namespace Code.EcsStateMachine.Runtime.Logic.EcsLoop
 {
+    /// <summary>
+    /// Unity update loop that executes ECS systems.
+    /// </summary>
     [DisallowMultipleComponent]
     public sealed class EcsLoop : MonoBehaviour
     {
         private EcsSystems _updateSystems;
         
+        /// <summary>
+        /// Initializes ECS update systems.
+        /// </summary>
         public void Init(Dictionary<int, EcsSystems> systems)
         {
             _updateSystems = systems[(int)EcsSystemType.Run];

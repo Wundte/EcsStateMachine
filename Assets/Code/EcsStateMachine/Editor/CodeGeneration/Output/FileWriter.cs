@@ -2,10 +2,16 @@
 
 namespace Code.EcsStateMachine.Editor.CodeGeneration.Output
 {
+    /// <summary>
+    /// Writes generated source files to the project.
+    /// </summary>
     public static class FileWriter
     {
         private const string GeneratedFolder = "Assets/Code/EcsStateMachine/Runtime/Generated";
     
+        /// <summary>
+        /// Writes content to generated file.
+        /// </summary>
         public static void Write(string fileName, string content)
         {
             var path = Path.Combine(
@@ -23,4 +29,3 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.Output
         }
     }
 }
-

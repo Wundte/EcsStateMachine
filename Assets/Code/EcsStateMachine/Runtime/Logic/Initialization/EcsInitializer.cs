@@ -13,6 +13,9 @@ using UnityEngine;
 
 namespace Code.EcsStateMachine.Runtime.Logic.Initialization
 {
+    /// <summary>
+    /// Initializes ECS world and configures system execution groups.
+    /// </summary>
     public sealed class EcsInitializer : IDisposable
     {
         private readonly Dictionary<int, EcsSystems> _systems = new();
@@ -34,6 +37,9 @@ namespace Code.EcsStateMachine.Runtime.Logic.Initialization
             InjectAndInitSystems(injectParameters);
         }
 
+        /// <summary>
+        /// Creates ECS system groups.
+        /// </summary>
         private void FillSystemsTypes()
         {
             var systemTypes = Enum.GetValues(typeof(EcsSystemType));
@@ -42,12 +48,14 @@ namespace Code.EcsStateMachine.Runtime.Logic.Initialization
                 _systems.Add((int)item, new EcsSystems(_ecsWorld));
             }
             
-            // Separate EcsSystems for systems in features is need to make LeoEcsLite DI work. 
-            // At the same time I don't want to fill SystemType with internal values that shouldn't be used by user.  
+            // Separate system group for feature systems.
             _featuresSystemsId = systemTypes.Cast<int>().Max() + 1;
             _systems.Add(_featuresSystemsId, new EcsSystems(_ecsWorld));
         }
         
+        /// <summary>
+        /// Creates Unity update loop and starts initial state.
+        /// </summary>
         public void StartEcsLoop()
         {
             var ecsLoopGameObject = new GameObject
@@ -62,7 +70,10 @@ namespace Code.EcsStateMachine.Runtime.Logic.Initialization
             
             EcsStateService.SetInitialState();
         }
-        
+
+        /// <summary>
+        /// Selects systems and features from state graph configuration.
+        /// </summary>
         private void SelectSystems(RuntimeEcsStateMachineGraph ecsConfig)
         {
             foreach (var (_, stateNode) in ecsConfig.AllRuntimeStateNodes)
@@ -81,9 +92,10 @@ namespace Code.EcsStateMachine.Runtime.Logic.Initialization
                 // Select system groups from features
                 var runSystems = _systems[(int)EcsSystemType.Run];
                 var allFeaturesSystems = _systems[_featuresSystemsId];
+
                 for (var j = 0; j < stateNode.Features.Count; j++)
                 {
-                    // This check is needed just in case the generation or id calculation went wrong. 
+                    // Validate generated state identifier.
                     if (!Enum.IsDefined(typeof(EcsStatesIds), stateNode.Id))
                     {
                         throw new Exception($"Unknown state id: {stateNode.Id}");
@@ -91,6 +103,7 @@ namespace Code.EcsStateMachine.Runtime.Logic.Initialization
                     
                     var feature = stateNode.Features[j];
                     var featureSystems = feature.GetSystems();
+
                     if (featureSystems is not null && featureSystems.Length > 0)
                     {
                         var id = StateFeaturesIdsService.GetStateId(feature.GetType(), (EcsStatesIds)stateNode.Id);
@@ -110,6 +123,9 @@ namespace Code.EcsStateMachine.Runtime.Logic.Initialization
             }
         }
         
+        /// <summary>
+        /// Injects dependencies and initializes all ECS systems.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private void InjectAndInitSystems(List<object> injectParameters)
         {
@@ -126,10 +142,14 @@ namespace Code.EcsStateMachine.Runtime.Logic.Initialization
             }
         }
 
+        /// <summary>
+        /// Destroys ECS systems and world.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Dispose()
         {
             var systemsList = _systems.Values.ToList();
+
             for (var i = 0; i < systemsList.Count; i++)
             {
                 systemsList[i].Destroy();

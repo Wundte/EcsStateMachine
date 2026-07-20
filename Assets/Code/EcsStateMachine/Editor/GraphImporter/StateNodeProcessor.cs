@@ -11,8 +11,14 @@ using UnityEngine;
 
 namespace Code.EcsStateMachine.Editor.GraphImporter
 {
+    /// <summary>
+    /// Converts editor state nodes into runtime ECS state data.
+    /// </summary>
     public static class StateNodeProcessor
     {
+        /// <summary>
+        /// Creates runtime state data from graph state node.
+        /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static RuntimeStateNode GetNew(StateNode stateNode)
         {
@@ -38,7 +44,7 @@ namespace Code.EcsStateMachine.Editor.GraphImporter
             }
             
             // Precess possible next states out port
-            var outPossibleNextStatesPort = stateNode.GetOutputPortByName(StateNode.DefaultNextState);
+            var outPossibleNextStatesPort = stateNode.GetOutputPortByName(StateNode.PossibleNextStates);
             var portsConnectedToPossibleNextStatesPort = new List<IPort>();
             outPossibleNextStatesPort.GetConnectedPorts(portsConnectedToPossibleNextStatesPort);
             
@@ -74,6 +80,9 @@ namespace Code.EcsStateMachine.Editor.GraphImporter
             };
         }
         
+        /// <summary>
+        /// Extracts block node data and creates runtime objects using provided factory.
+        /// </summary>
         private static List<TResult> GetBlockData<TBlock, TEnum, TResult>(
             StateNode stateNode,
             Func<TEnum, TResult> factory,
@@ -123,7 +132,7 @@ namespace Code.EcsStateMachine.Editor.GraphImporter
 
                     var productType = product.GetType();
 
-                    // We check for adding duplicates systems or features, they won't cause any problems, but are probably not what is intended
+                    // Avoid adding duplicate systems or features.
                     if (!addedTypes.Add(productType))
                     {
                         Debug.LogWarning($"{nodeName} State contains duplicate {productType.Name}. Duplicates won't be added to ECS schedule.");
@@ -134,7 +143,7 @@ namespace Code.EcsStateMachine.Editor.GraphImporter
                 }
             }
 
-            // Duplicate block nodes won't cause any problems, but they are probably not what is intended
+            // Warn about duplicated block nodes.
             foreach (var block in blockTypesCounter)
             {
                 if (block.Value > 1)

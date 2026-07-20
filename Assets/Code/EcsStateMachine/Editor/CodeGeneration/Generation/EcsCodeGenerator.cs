@@ -10,10 +10,9 @@ using UnityEditor;
 namespace Code.EcsStateMachine.Editor.CodeGeneration.Generation
 {
     /// <summary>
-    /// Generic code generator for ECS-related types (Systems, Features, etc.)
-    /// Handles enum generation and file output in a reusable way.
+    /// Generates ECS-related code files such as enums and factories.
     /// </summary>
-    public class EcsCodeGenerator
+    public sealed class EcsCodeGenerator
     {
         private readonly string enumName;
         private readonly string enumNamespace;
@@ -30,7 +29,7 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.Generation
         }
 
         /// <summary>
-        /// Generate enum from list of types
+        /// Creates enum definition from provided types.
         /// </summary>
         public EnumDefinition CreateEnumDefinition(List<Type> types)
         {
@@ -66,7 +65,7 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.Generation
         }
 
         /// <summary>
-        /// Find all types derived from base type, filtered for code generation
+        /// Finds valid types for code generation.
         /// </summary>
         public static List<Type> FindTypesDerivedFrom<T>()
         {
@@ -82,7 +81,7 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.Generation
         }
 
         /// <summary>
-        /// Create type map (name -> full name) for factory generation
+        /// Creates mapping between generated names and full type names.
         /// </summary>
         public static Dictionary<string, string> CreateTypeMap(List<Type> types)
         {
@@ -101,7 +100,7 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.Generation
         }
 
         /// <summary>
-        /// Write enum file to output
+        /// Generates and writes enum source file.
         /// </summary>
         public void WriteEnum(EnumDefinition enumDef)
         {

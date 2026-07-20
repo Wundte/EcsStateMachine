@@ -3,6 +3,11 @@ using UnityEngine;
 
 namespace Code.EcsStateMachine.Editor.EcsStateMachineGraph.GraphNodes
 {
+    /// <summary>
+    /// Represents an ECS state in the graph.
+    /// Contains state configuration and feature blocks that define
+    /// logic executed while this state is active.
+    /// </summary>
     [System.Serializable]
     public sealed class StateNode : ContextNode
     {

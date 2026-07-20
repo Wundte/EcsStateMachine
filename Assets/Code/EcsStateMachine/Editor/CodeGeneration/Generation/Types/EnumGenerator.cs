@@ -3,8 +3,14 @@ using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Enums;
 
 namespace Code.EcsStateMachine.Editor.CodeGeneration.Generation.Types
 {
-    public sealed class EnumGenerator
+    /// <summary>
+    /// Generates C# enum source code.
+    /// </summary>
+    public static class EnumGenerator
     {
+        /// <summary>
+        /// Generates enum code from definition data.
+        /// </summary>
         public static string GenerateEnum(EnumDefinition definition)
         {
             var builder = new StringBuilder();

@@ -1,9 +1,12 @@
 ﻿namespace Code.EcsStateMachine.Editor.CodeGeneration.Utils
 {
+    /// <summary>
+    /// Generates stable identifiers from strings.
+    /// </summary>
     public static class StableId
     {
         /// <summary>
-        /// Get hash from system name.
+        /// Calculates deterministic hash value.
         /// </summary>
         public static int Get(string text)
         {
@@ -21,4 +24,3 @@
         }
     }
 }
-

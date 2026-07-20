@@ -37,6 +37,7 @@ namespace Code.Demo.Runtime.Logic.GameLoad
                 
                 // Load ECS
                 var ecsInitializer = new EcsInitializer(injectParameters, ecsStateMachineGraph, ecsWorld);
+                _services.Add(ecsInitializer);
                 
                 ecsInitializer.StartEcsLoop();
             }

@@ -5,9 +5,15 @@ using Unity.GraphToolkit.Editor;
 
 namespace Code.EcsStateMachine.Editor.EcsStateMachineGraph.GraphNodes
 {
+    /// <summary>
+    /// Graph node block for configuring systems executed on state enter.
+    /// </summary>
     [UseWithContext(typeof(StateNode))] [System.Serializable]
     public class OnStateEnterSystemsBlockNode : BlockNode
     {
+        /// <summary>
+        /// Node option storing the number of system ports.
+        /// </summary>
         private const string NumberOfSystem = "NumberOfSystem";
         
         protected override void OnDefineOptions(IOptionDefinitionContext context)
@@ -25,8 +31,8 @@ namespace Code.EcsStateMachine.Editor.EcsStateMachineGraph.GraphNodes
         
             if (numberOfSystemsOption != null && numberOfSystemsOption.TryGetValue<int>(out var number))
             {
-                // Avoid big numbers just in case. 
-                number = Math.Clamp(number, NodesConstants.MinNumberOfElements, NodesConstants.MaxNumberOfElements);
+                // Limit port count to keep node readable.
+                number = Math.Clamp(number, NodesConstants.MinNumberOfPorts, NodesConstants.MaxNumberOfPorts);
 
                 for (var i = 0; i < number; i++)
                 {

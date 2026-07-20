@@ -2,6 +2,9 @@
 
 namespace Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Enums
 {
+    /// <summary>
+    /// Contains data required to generate an enum.
+    /// </summary>
     public sealed class EnumDefinition
     {
         public string Namespace = string.Empty;
@@ -9,4 +12,3 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Enums
         public IReadOnlyList<EnumValue> Values = new List<EnumValue>();
     }
 }
-

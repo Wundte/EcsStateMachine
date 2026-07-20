@@ -11,9 +11,16 @@ using UnityEngine;
 
 namespace Code.EcsStateMachine.Editor.GraphImporter
 {
+    /// <summary>
+    /// Imports ECS state machine graph assets into runtime graph data.
+    /// </summary>
     [ScriptedImporter(1, "ecsgraph")]
     public sealed class EcsStateMachineGraphImporter : ScriptedImporter
     {
+        /// <summary>
+        /// Converts editor graph nodes into runtime state machine data
+        /// and generates state identifiers.
+        /// </summary>
         public override void OnImportAsset(AssetImportContext ctx)
         {
             var editorEventGraph = GraphDatabase.LoadGraphForImporter<EcsStateMachineGraph.EcsStateMachineGraph>(ctx.assetPath);
@@ -42,7 +49,7 @@ namespace Code.EcsStateMachine.Editor.GraphImporter
             {
                 if (node.IsDefaultState)
                 {
-                    runtimeEcsStateMachineGraph.DefaulState = (EcsStatesIds)node.Id;
+                    runtimeEcsStateMachineGraph.DefaultState = (EcsStatesIds)node.Id;
                     break;
                 }
             }

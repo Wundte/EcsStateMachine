@@ -3,9 +3,12 @@ using UnityEditor;
 
 namespace Code.EcsStateMachine.Editor.EcsStateMachineGraph
 {
+    /// <summary>
+    /// Graph asset representing ECS state machine configuration.
+    /// </summary>
     [System.Serializable]
     [Graph(AssetFileExtension)]
-    public class EcsStateMachineGraph : Graph
+    public sealed class EcsStateMachineGraph : Graph
     {
         public const string AssetFileExtension = "ecsgraph";
         

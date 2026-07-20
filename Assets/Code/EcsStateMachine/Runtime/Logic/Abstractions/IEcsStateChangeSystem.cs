@@ -2,12 +2,21 @@
 
 namespace Code.EcsStateMachine.Runtime.Logic.Abstractions
 {
+    /// <summary>
+    /// ECS system executed during state transitions.
+    /// </summary>
     public interface IEcsStateChangeSystem : IEcsRunSystem
     {
+        /// <summary>
+        /// Executes state change logic.
+        /// </summary>
         void Run();
         
-        // Avoid having to implement this method in all IEcsStateChangeSystem implementers. 
-        // Run() and Run(EcsSystems) are duplicates, since everything we can get from system we can also get from DI
+        /// <summary>
+        /// Explicit implementation of ECS run method.
+        /// Allows state change systems to use parameterless Run method
+        /// while keeping compatibility with IEcsRunSystem.
+        /// </summary>
         void IEcsRunSystem.Run(EcsSystems systems)
         {
             Run();

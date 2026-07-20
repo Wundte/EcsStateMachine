@@ -3,8 +3,14 @@ using System.Text;
 
 namespace Code.EcsStateMachine.Editor.CodeGeneration.Generation.Factories
 {
-    public sealed class EcsStateChangeSystemsFactoryGenerator
+    /// <summary>
+    /// Generates factory code for creating ECS state change systems.
+    /// </summary>
+    public static class EcsStateChangeSystemsFactoryGenerator
     {
+        /// <summary>
+        /// Generates source code for EcsStateChangeSystemsFactory.
+        /// </summary>
         public static string GenerateFactory(IReadOnlyDictionary<string, string> systems)
         {
             var builder = new StringBuilder();
@@ -30,7 +36,7 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.Generation.Factories
 
             builder.AppendLine("                EcsStateChangeSystemsIds.None => null,");
 
-            foreach (KeyValuePair<string, string> system in systems)
+            foreach (var system in systems)
             {
                 builder.Append("                EcsStateChangeSystemsIds.");
                 builder.Append(system.Key);

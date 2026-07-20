@@ -3,8 +3,14 @@ using System.Text;
 
 namespace Code.EcsStateMachine.Editor.CodeGeneration.Generation.Factories
 {
-    public sealed class EcsFeatureFactoryGenerator
+    /// <summary>
+    /// Generates factory code for creating ECS features from generated identifiers.
+    /// </summary>
+    public static class EcsFeatureFactoryGenerator
     {
+        /// <summary>
+        /// Generates source code for EcsFeatureFactory.
+        /// </summary>
         public static string GenerateFactory(IReadOnlyDictionary<string, string> features)
         {
             var builder = new StringBuilder();
@@ -30,7 +36,7 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.Generation.Factories
 
             builder.AppendLine("                EcsFeatureIds.None => null,");
 
-            foreach (KeyValuePair<string, string> feature in features)
+            foreach (var feature in features)
             {
                 builder.Append("                EcsFeatureIds.");
                 builder.Append(feature.Key);
