@@ -1,0 +1,22 @@
+{
+    "name": "EcsStateMachine.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f3bfd7fb23319984185365668e1707c9",
+        "GUID:bf5bbaa4c6019374684c6771f0219e9e",
+        "GUID:e59bf9fc7d5a44b18a819a92edd46163",
+        "GUID:f5f01a091e0d746659b4380253d52f4e",
+        "GUID:e06a58708b83247ca9dc984644f5b40b"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
