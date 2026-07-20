@@ -1,4 +1,4 @@
-﻿using Code.Logic.Services;
+﻿using Code.EcsStateMachine.Logic.Services;
 using Leopotam.EcsLite;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ namespace Code.Demo.Logic.InputCapture
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                GameStateService.NextState();
+                EcsStateService.NextState();
             }
         }
     }

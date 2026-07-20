@@ -1,4 +1,4 @@
-﻿using Code.Logic.Services;
+﻿using Code.EcsStateMachine.Logic.Services;
 using TMPro;
 using UnityEngine;
 
@@ -10,7 +10,7 @@ namespace Code.Demo.UI
 
         private void Update()
         {
-            currentStateText.text = GameStateService.CurrentState.ToString();
+            currentStateText.text = EcsStateService.CurrentState.ToString();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using Code.Demo.Data.EcsComponents.Cubes;
 using Code.Demo.Data.EcsComponents.СubesMovement;
 using Code.Demo.Data.UnityComponents.Cubes;
-using Code.Logic.Ecs.Interfaces;
+using Code.EcsStateMachine.Logic.Abstractions;
 using Cysharp.Threading.Tasks;
 using Leopotam.EcsLite.Di;
 using UnityEngine;

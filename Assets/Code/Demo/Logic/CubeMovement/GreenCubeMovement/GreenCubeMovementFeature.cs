@@ -1,4 +1,4 @@
-﻿using Code.Logic.Ecs.Features;
+﻿using Code.EcsStateMachine.Logic.Abstractions;
 using Leopotam.EcsLite;
 
 namespace Code.Demo.Logic.CubeMovement.GreenCubeMovement
