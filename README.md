@@ -4,6 +4,12 @@ Visual state management system for Unity ECS projects built on **LeoEcsLite**.
 
 Create gameplay states using Unity Graph Toolkit, organize systems into reusable features, and control ECS execution flow through a state-driven architecture.
 
+## Demo
+
+Demo show how state transitions and executing systems can be changed on the fly. 
+
+![ECS State Machine Demo](Documentation/Images/demo.gif)
+
 ## Overview
 
 ECS State Machine provides a visual workflow for managing complex gameplay states in Unity.
