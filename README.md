@@ -20,7 +20,7 @@ The system allows you to:
 
 ## Graph Editor
 
-![Graph Editor](Documentation~/Images/graph-editor.png)
+![Graph Editor](Documentation~/Images/graph.png)
 
 Each state node represents an ECS state and can contain:
 
