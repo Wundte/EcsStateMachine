@@ -88,7 +88,9 @@ namespace Code.EcsStateMachine.Logic.Services
             
             CurrentState = newState;
             
+#if UNITY_EDITOR
             Debug.Log($"<color=#00C853>Ecs State changed from {oldState} to {newState}</color>");
+#endif
         }
 
         private static void ChangeSystemGroupState(Type featureType, EcsStatesIds state, bool newState)
