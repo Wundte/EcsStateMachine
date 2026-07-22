@@ -6,6 +6,7 @@ using Code.EcsStateMachine.Editor.EcsStateMachineGraph.GraphNodes;
 using Code.EcsStateMachine.Runtime.Data.EcsGraph;
 using Generated;
 using Unity.GraphToolkit.Editor;
+using UnityEditor;
 using UnityEditor.AssetImporters;
 using UnityEngine;
 
@@ -65,6 +66,8 @@ namespace Code.EcsStateMachine.Editor.GraphImporter
                 }));
             
             ctx.AddObjectToAsset(ctx.assetPath, runtimeEcsStateMachineGraph);
+            
+            EditorApplication.delayCall += AssetDatabase.Refresh;
             
             Debug.Log("<color=#00C853>Ecs Graph successfully imported</color>");
         }
