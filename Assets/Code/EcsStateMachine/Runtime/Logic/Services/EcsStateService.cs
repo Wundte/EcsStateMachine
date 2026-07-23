@@ -32,25 +32,34 @@ namespace Code.EcsStateMachine.Runtime.Logic.Services
 
         /// <summary>
         /// Activates default state from ECS state machine graph.
+        /// State service API methods are intentionally fire-and-forget.
+        /// Consumers are not expected to await state changes.
+        /// Internal state transition execution awaits LeoEcsLite state group switching.
         /// </summary>
         public static void SetInitialState()
         {
-            ChangeState(CurrentState, _ecsStateMachineGraph.DefaultState);
+            _ = ChangeState(CurrentState, _ecsStateMachineGraph.DefaultState);
         }
         
         /// <summary>
         /// Changes state using current state's default transition.
+        /// State service API methods are intentionally fire-and-forget.
+        /// Consumers are not expected to await state changes.
+        /// Internal state transition execution awaits LeoEcsLite state group switching.
         /// </summary>
         public static void NextState()
         {
             var currentStateStateNode = _ecsStateMachineGraph.AllRuntimeStateNodes[(int)CurrentState];
             var defaultNextState = (EcsStatesIds)currentStateStateNode.DefaultNextState;
             
-            ChangeState(CurrentState, defaultNextState);
+            _ = ChangeState(CurrentState, defaultNextState);
         }
 
         /// <summary>
         /// Changes state if transition is allowed by graph configuration.
+        /// State service API methods are intentionally fire-and-forget.
+        /// Consumers are not expected to await state changes.
+        /// Internal state transition execution awaits LeoEcsLite state group switching.
         /// </summary>
         public static void NextState(EcsStatesIds state)
         {
@@ -58,7 +67,7 @@ namespace Code.EcsStateMachine.Runtime.Logic.Services
 
             if (currentStateStateNode.PossibleNextStates.Contains((int)state))
             {
-                ChangeState(CurrentState, state);
+                _ = ChangeState(CurrentState, state);
             }
         }
 
