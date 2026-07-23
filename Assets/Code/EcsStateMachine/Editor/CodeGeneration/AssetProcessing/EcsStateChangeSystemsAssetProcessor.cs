@@ -1,7 +1,10 @@
-﻿using Code.EcsStateMachine.Editor.CodeGeneration.Generation;
-using Code.EcsStateMachine.Editor.CodeGeneration.Generation.Factories;
+﻿using Code.EcsStateMachine.Editor.CodeGeneration.Generation.Factories;
+using Code.EcsStateMachine.Editor.CodeGeneration.Generation.Types;
 using Code.EcsStateMachine.Editor.CodeGeneration.Output;
+using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Factories;
+using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Utils;
 using Code.EcsStateMachine.Runtime.Logic.Abstractions;
+using Leopotam.EcsLite;
 using UnityEditor;
 using UnityEngine;
 
@@ -21,15 +24,6 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.AssetProcessing
     /// </summary>
     public class EcsStateChangeSystemsAssetProcessor : AssetPostprocessor
     {
-        /// <summary>
-        /// Shared code generator configuration used for creating the generated
-        /// state change systems identifier enum.
-        /// </summary>
-        private static readonly EcsCodeGenerator Generator = new (
-            enumName: "EcsStateChangeSystemsIds",
-            enumNamespace: "Code.EcsStateMachine.Runtime.Generated",
-            outputFileName: "EcsStateChangeSystemsIds.cs");
-
         /// <summary>
         /// Called automatically by Unity after scripts have been recompiled.
         ///
@@ -58,15 +52,23 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.AssetProcessing
         [MenuItem("Tools/Generate ECS Systems")]
         public static void Generate()
         {
-            var systemTypes = EcsCodeGenerator.FindTypesDerivedFrom<IEcsStateChangeSystem>();
+            var systemTypes = TypeFinder.FindDerivedTypes<IEcsStateChangeSystem>();
 
-            var enumDefinition = Generator.CreateEnumDefinition(systemTypes);
-            Generator.WriteEnum(enumDefinition);
+            var enumDefinition = EnumSourceGenerator.CreateDefinition(
+                systemTypes,
+                "EcsStateChangeSystemsIds",
+                "Code.EcsStateMachine.Runtime.Generated");
+            FileWriter.Write("EcsStateChangeSystemsIds.cs", EnumSourceGenerator.Generate(enumDefinition));
 
-            var systemTypeMap = EcsCodeGenerator.CreateTypeMap(systemTypes);
-            var factoryCode = EcsStateChangeSystemsFactoryGenerator.GenerateFactory(systemTypeMap);
-
-            FileWriter.Write("EcsRunSystemsFactory.cs", factoryCode);
+            var factoryDefinition = new FactoryDefinition
+            {
+                Namespace = "Code.EcsStateMachine.Runtime.Generated",
+                FactoryName = "EcsStateChangeSystemsFactory",
+                EnumName = "EcsStateChangeSystemsIds",
+                ReturnType = typeof(IEcsStateChangeSystem),
+                Types = systemTypes
+            };
+            FileWriter.Write("EcsStateChangeSystemsFactory.cs", FactorySourceGenerator.Generate(factoryDefinition));
 
             AssetDatabase.Refresh();
 

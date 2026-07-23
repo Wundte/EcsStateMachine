@@ -55,15 +55,14 @@ namespace Code.EcsStateMachine.Editor.GraphImporter
                 }
             }
             
-            // Generate enum from imported states names
-            FileWriter.Write(
-                "EcsStatesIds.cs", // TODO: Fix this, make a constant
-                EnumGenerator.GenerateEnum(new EnumDefinition
-                {
-                    Namespace = "Generated", // TODO: Fix this, make a constant
-                    Name = "EcsStatesIds", // TODO: Fix this, make a constant
-                    Values = values
-                }));
+            // Generate enum with state ids
+            var enumDefinition = new EnumDefinition
+            {
+                Values = values,
+                Name = "EcsStatesIds",
+                Namespace = "Code.EcsStateMachine.Runtime.Generated"
+            };
+            FileWriter.Write("EcsStatesIds.cs", EnumSourceGenerator.Generate(enumDefinition));
             
             ctx.AddObjectToAsset(ctx.assetPath, runtimeEcsStateMachineGraph);
             

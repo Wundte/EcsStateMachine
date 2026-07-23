@@ -1,6 +1,8 @@
-using Code.EcsStateMachine.Editor.CodeGeneration.Generation;
 using Code.EcsStateMachine.Editor.CodeGeneration.Generation.Factories;
+using Code.EcsStateMachine.Editor.CodeGeneration.Generation.Types;
 using Code.EcsStateMachine.Editor.CodeGeneration.Output;
+using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Factories;
+using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Utils;
 using Code.EcsStateMachine.Runtime.Logic.Abstractions;
 using UnityEditor;
 using UnityEngine;
@@ -19,14 +21,6 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.AssetProcessing
     /// </summary>
     public class EcsFeatureAssetProcessor : AssetPostprocessor
     {
-        /// <summary>
-        /// Shared code generator configuration for ECS feature related generated files.
-        /// </summary>
-        private static readonly EcsCodeGenerator Generator = new EcsCodeGenerator(
-            enumName: "EcsFeatureIds",
-            enumNamespace: "Code.EcsStateMachine.Runtime.Generated",
-            outputFileName: "EcsFeatureIds.cs");
-
         /// <summary>
         /// Called automatically by Unity after scripts are recompiled.
         ///
@@ -55,15 +49,23 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.AssetProcessing
         [MenuItem("Tools/Generate ECS Features")]
         public static void Generate()
         {
-            var featureTypes = EcsCodeGenerator.FindTypesDerivedFrom<EcsFeature>();
+            var featureTypes = TypeFinder.FindDerivedTypes<EcsFeature>();
 
-            var enumDefinition = Generator.CreateEnumDefinition(featureTypes);
-            Generator.WriteEnum(enumDefinition);
+            var enumDefinition = EnumSourceGenerator.CreateDefinition(
+                featureTypes,
+                "EcsFeatureIds",
+                "Code.EcsStateMachine.Runtime.Generated");
+            FileWriter.Write("EcsFeatureIds.cs", EnumSourceGenerator.Generate(enumDefinition));
 
-            var featureTypeMap = EcsCodeGenerator.CreateTypeMap(featureTypes);
-            var factoryCode = EcsFeatureFactoryGenerator.GenerateFactory(featureTypeMap);
-
-            FileWriter.Write("EcsFeatureFactory.cs", factoryCode);
+            var factoryDefinition = new FactoryDefinition
+            {
+                Namespace = "Code.EcsStateMachine.Runtime.Generated",
+                FactoryName = "EcsFeatureFactory",
+                EnumName = "EcsFeatureIds",
+                ReturnType = typeof(EcsFeature),
+                Types = featureTypes
+            };
+            FileWriter.Write("EcsFeatureFactory.cs", FactorySourceGenerator.Generate(factoryDefinition));
 
             AssetDatabase.Refresh();
 
