@@ -7,7 +7,7 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Utils
     /// <summary>
     /// Resolves type names for generated code and handles name collisions.
     /// </summary>
-    public static class TypeNameResolver
+    internal static class TypeNameResolver
     {
         /// <summary>
         /// Creates a map containing the amount of occurrences for each type name.

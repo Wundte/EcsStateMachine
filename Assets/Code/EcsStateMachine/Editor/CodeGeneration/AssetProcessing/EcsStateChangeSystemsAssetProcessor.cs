@@ -1,11 +1,9 @@
-﻿using Code.EcsStateMachine.Editor.CodeGeneration.Generation.Factories;
-using Code.EcsStateMachine.Editor.CodeGeneration.Generation.Types;
+﻿using Code.EcsStateMachine.Editor.CodeGeneration.Generation;
 using Code.EcsStateMachine.Editor.CodeGeneration.Output;
 using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Factories;
 using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Utils;
 using Code.EcsStateMachine.Editor.Settings;
 using Code.EcsStateMachine.Runtime.Logic.Abstractions;
-using Leopotam.EcsLite;
 using UnityEditor;
 using UnityEngine;
 
@@ -23,7 +21,7 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.AssetProcessing
     ///
     /// The processor runs only inside the Unity Editor and is excluded from runtime builds.
     /// </summary>
-    public class EcsStateChangeSystemsAssetProcessor : AssetPostprocessor
+    internal sealed class EcsStateChangeSystemsAssetProcessor : AssetPostprocessor
     {
         /// <summary>
         /// Called automatically by Unity after scripts have been recompiled.

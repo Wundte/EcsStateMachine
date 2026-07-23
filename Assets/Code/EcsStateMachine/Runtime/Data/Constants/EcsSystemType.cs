@@ -3,7 +3,7 @@
     /// <summary>
     /// Defines ECS system execution groups.
     /// </summary>
-    public enum EcsSystemType
+    internal enum EcsSystemType
     {
         /// <summary>
         /// Systems executed during state changes.

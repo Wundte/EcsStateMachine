@@ -3,7 +3,7 @@
     /// <summary>
     /// Generates stable identifiers from strings.
     /// </summary>
-    public static class StableId
+    internal static class StableId
     {
         /// <summary>
         /// Calculates deterministic hash value.

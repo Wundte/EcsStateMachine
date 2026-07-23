@@ -5,12 +5,12 @@ using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Enums;
 using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Utils;
 using Code.EcsStateMachine.Editor.CodeGeneration.Utils;
 
-namespace Code.EcsStateMachine.Editor.CodeGeneration.Generation.Types
+namespace Code.EcsStateMachine.Editor.CodeGeneration.Generation
 {
     /// <summary>
     /// Generates C# enum source code.
     /// </summary>
-    public static class EnumSourceGenerator
+    internal static class EnumSourceGenerator
     {
         /// <summary>
         /// Creates enum definition from provided types.

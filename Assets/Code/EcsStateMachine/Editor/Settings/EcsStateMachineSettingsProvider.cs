@@ -2,7 +2,7 @@
 
 namespace Code.EcsStateMachine.Editor.Settings
 {
-    public static class EcsStateMachineSettingsProvider
+    internal static class EcsStateMachineSettingsProvider
     {
         [SettingsProvider]
         public static SettingsProvider CreateSettingsProvider()

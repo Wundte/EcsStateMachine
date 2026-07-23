@@ -1,5 +1,4 @@
-using Code.EcsStateMachine.Editor.CodeGeneration.Generation.Factories;
-using Code.EcsStateMachine.Editor.CodeGeneration.Generation.Types;
+using Code.EcsStateMachine.Editor.CodeGeneration.Generation;
 using Code.EcsStateMachine.Editor.CodeGeneration.Output;
 using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Factories;
 using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Utils;
@@ -20,7 +19,7 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.AssetProcessing
     ///
     /// This class is executed only in the Unity Editor and does not affect runtime builds.
     /// </summary>
-    public class EcsFeatureAssetProcessor : AssetPostprocessor
+    internal sealed class EcsFeatureAssetProcessor : AssetPostprocessor
     {
         /// <summary>
         /// Called automatically by Unity after scripts are recompiled.

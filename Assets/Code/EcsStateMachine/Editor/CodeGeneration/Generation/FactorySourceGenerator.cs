@@ -4,12 +4,12 @@ using System.Text;
 using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Factories;
 using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Utils;
 
-namespace Code.EcsStateMachine.Editor.CodeGeneration.Generation.Factories
+namespace Code.EcsStateMachine.Editor.CodeGeneration.Generation
 {
     /// <summary>
     /// Generates factory code for creating ECS objects from generated identifiers.
     /// </summary>
-    public static class FactorySourceGenerator
+    internal static class FactorySourceGenerator
     {
         /// <summary>
         /// Generates factory source code from factory definition.

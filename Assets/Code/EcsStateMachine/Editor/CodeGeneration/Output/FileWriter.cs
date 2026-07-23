@@ -5,7 +5,7 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.Output
     /// <summary>
     /// Writes generated source files to the project.
     /// </summary>
-    public static class FileWriter
+    internal static class FileWriter
     {
         private const string GeneratedFolder = "Assets/Code/EcsStateMachine/Runtime/Generated";
     

@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 
 namespace Code.EcsStateMachine.Runtime.Data.EcsGraph
 {
-#pragma warning disable UAC1009 // Suppress warning from unity serializer 
+#pragma warning disable UAC1009 // Suppress warning from unity serializer about dictionaries serialization
     
     /// <summary>
     /// Runtime representation of ECS state machine graph.

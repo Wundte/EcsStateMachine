@@ -2,7 +2,7 @@
 
 namespace Code.EcsStateMachine.Editor.Settings
 {
-    public sealed class EcsStateMachineSettings : ScriptableSingleton<EcsStateMachineSettings>
+    internal sealed class EcsStateMachineSettings : ScriptableSingleton<EcsStateMachineSettings>
     {
         public string GeneratedNamespace = "Code.EcsStateMachine.Runtime.Generated";
 

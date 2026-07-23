@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Code.EcsStateMachine.Editor.CodeGeneration.Generation.Types;
+using Code.EcsStateMachine.Editor.CodeGeneration.Generation;
 using Code.EcsStateMachine.Editor.CodeGeneration.Output;
 using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Enums;
 using Code.EcsStateMachine.Editor.EcsStateMachineGraph.GraphNodes;
@@ -17,7 +17,7 @@ namespace Code.EcsStateMachine.Editor.GraphImporter
     /// Imports ECS state machine graph assets into runtime graph data.
     /// </summary>
     [ScriptedImporter(1, "ecsgraph")]
-    public sealed class EcsStateMachineGraphImporter : ScriptedImporter
+    internal sealed class EcsStateMachineGraphImporter : ScriptedImporter
     {
         /// <summary>
         /// Converts editor graph nodes into runtime state machine data

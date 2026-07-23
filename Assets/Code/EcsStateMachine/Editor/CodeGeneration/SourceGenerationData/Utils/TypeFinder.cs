@@ -8,7 +8,7 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Utils
     /// <summary>
     /// Finds types available for code generation.
     /// </summary>
-    public static class TypeFinder
+    internal static class TypeFinder
     {
         /// <summary>
         /// Finds valid non-abstract types derived from specified type.

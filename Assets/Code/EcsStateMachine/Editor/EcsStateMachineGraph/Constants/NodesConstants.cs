@@ -3,7 +3,7 @@
     /// <summary>
     /// Constants used by state machine graph nodes.
     /// </summary>
-    public static class NodesConstants
+    internal static class NodesConstants
     {
         /// <summary>
         /// Minimum number of ports displayed on a graph node.

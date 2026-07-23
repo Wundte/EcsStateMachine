@@ -6,7 +6,7 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Factor
     /// <summary>
     /// Contains data required to generate a factory.
     /// </summary>
-    public sealed class FactoryDefinition
+    internal sealed class FactoryDefinition
     {
         public string Namespace;
         public string FactoryName;

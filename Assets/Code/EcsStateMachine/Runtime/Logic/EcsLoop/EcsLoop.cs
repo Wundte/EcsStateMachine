@@ -9,7 +9,7 @@ namespace Code.EcsStateMachine.Runtime.Logic.EcsLoop
     /// Unity update loop that executes ECS systems.
     /// </summary>
     [DisallowMultipleComponent]
-    public sealed class EcsLoop : MonoBehaviour
+    internal sealed class EcsLoop : MonoBehaviour
     {
         private EcsSystems _updateSystems;
         

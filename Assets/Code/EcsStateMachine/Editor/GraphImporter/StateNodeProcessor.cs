@@ -14,7 +14,7 @@ namespace Code.EcsStateMachine.Editor.GraphImporter
     /// <summary>
     /// Converts editor state nodes into runtime ECS state data.
     /// </summary>
-    public static class StateNodeProcessor
+    internal static class StateNodeProcessor
     {
         /// <summary>
         /// Creates runtime state data from graph state node.
