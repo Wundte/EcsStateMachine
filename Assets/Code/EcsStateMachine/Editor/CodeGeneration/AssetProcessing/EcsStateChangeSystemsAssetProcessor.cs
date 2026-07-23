@@ -3,6 +3,7 @@ using Code.EcsStateMachine.Editor.CodeGeneration.Generation.Types;
 using Code.EcsStateMachine.Editor.CodeGeneration.Output;
 using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Factories;
 using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Utils;
+using Code.EcsStateMachine.Editor.Settings;
 using Code.EcsStateMachine.Runtime.Logic.Abstractions;
 using Leopotam.EcsLite;
 using UnityEditor;
@@ -54,25 +55,27 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.AssetProcessing
         {
             var systemTypes = TypeFinder.FindDerivedTypes<IEcsStateChangeSystem>();
 
+            const string enumName = "EcsStateChangeSystemsIds";
             var enumDefinition = EnumSourceGenerator.CreateDefinition(
                 systemTypes,
-                "EcsStateChangeSystemsIds",
-                "Code.EcsStateMachine.Runtime.Generated");
-            FileWriter.Write("EcsStateChangeSystemsIds.cs", EnumSourceGenerator.Generate(enumDefinition));
-
+                enumName,
+                EcsStateMachineSettings.instance.GeneratedNamespace);
+            FileWriter.Write($"{enumName}.cs", EnumSourceGenerator.Generate(enumDefinition));
+            
+            const string factoryName = "EcsStateChangeSystemsFactory";
             var factoryDefinition = new FactoryDefinition
             {
-                Namespace = "Code.EcsStateMachine.Runtime.Generated",
-                FactoryName = "EcsStateChangeSystemsFactory",
-                EnumName = "EcsStateChangeSystemsIds",
+                Namespace = EcsStateMachineSettings.instance.GeneratedNamespace,
+                FactoryName = factoryName,
+                EnumName = enumName,
                 ReturnType = typeof(IEcsStateChangeSystem),
                 Types = systemTypes
             };
-            FileWriter.Write("EcsStateChangeSystemsFactory.cs", FactorySourceGenerator.Generate(factoryDefinition));
+            FileWriter.Write($"{factoryName}.cs", FactorySourceGenerator.Generate(factoryDefinition));
 
             AssetDatabase.Refresh();
 
-            Debug.Log("<color=#00C853>EcsOnStateChangeSystemsIds and Factory successfully generated</color>");
+            Debug.Log("<color=#00C853>EcsStateChangeSystemsIds and Factory successfully generated</color>");
         }
     }
 }

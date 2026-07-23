@@ -3,6 +3,7 @@ using Code.EcsStateMachine.Editor.CodeGeneration.Generation.Types;
 using Code.EcsStateMachine.Editor.CodeGeneration.Output;
 using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Factories;
 using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Utils;
+using Code.EcsStateMachine.Editor.Settings;
 using Code.EcsStateMachine.Runtime.Logic.Abstractions;
 using UnityEditor;
 using UnityEngine;
@@ -51,21 +52,23 @@ namespace Code.EcsStateMachine.Editor.CodeGeneration.AssetProcessing
         {
             var featureTypes = TypeFinder.FindDerivedTypes<EcsFeature>();
 
+            const string enumName = "EcsFeatureIds";
             var enumDefinition = EnumSourceGenerator.CreateDefinition(
                 featureTypes,
-                "EcsFeatureIds",
-                "Code.EcsStateMachine.Runtime.Generated");
-            FileWriter.Write("EcsFeatureIds.cs", EnumSourceGenerator.Generate(enumDefinition));
+                enumName,
+                EcsStateMachineSettings.instance.GeneratedNamespace);
+            FileWriter.Write($"{enumName}.cs", EnumSourceGenerator.Generate(enumDefinition));
 
+            const string factoryName = "EcsFeatureFactory";
             var factoryDefinition = new FactoryDefinition
             {
-                Namespace = "Code.EcsStateMachine.Runtime.Generated",
-                FactoryName = "EcsFeatureFactory",
-                EnumName = "EcsFeatureIds",
+                Namespace = EcsStateMachineSettings.instance.GeneratedNamespace,
+                FactoryName = factoryName,
+                EnumName = enumName,
                 ReturnType = typeof(EcsFeature),
                 Types = featureTypes
             };
-            FileWriter.Write("EcsFeatureFactory.cs", FactorySourceGenerator.Generate(factoryDefinition));
+            FileWriter.Write($"{factoryName}.cs", FactorySourceGenerator.Generate(factoryDefinition));
 
             AssetDatabase.Refresh();
 

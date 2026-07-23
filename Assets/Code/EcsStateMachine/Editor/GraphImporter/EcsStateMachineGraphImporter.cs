@@ -3,6 +3,7 @@ using Code.EcsStateMachine.Editor.CodeGeneration.Generation.Types;
 using Code.EcsStateMachine.Editor.CodeGeneration.Output;
 using Code.EcsStateMachine.Editor.CodeGeneration.SourceGenerationData.Enums;
 using Code.EcsStateMachine.Editor.EcsStateMachineGraph.GraphNodes;
+using Code.EcsStateMachine.Editor.Settings;
 using Code.EcsStateMachine.Runtime.Data.EcsGraph;
 using Generated;
 using Unity.GraphToolkit.Editor;
@@ -56,13 +57,14 @@ namespace Code.EcsStateMachine.Editor.GraphImporter
             }
             
             // Generate enum with state ids
+            const string enumName = "EcsStatesIds";
             var enumDefinition = new EnumDefinition
             {
                 Values = values,
-                Name = "EcsStatesIds",
-                Namespace = "Code.EcsStateMachine.Runtime.Generated"
+                Name = enumName,
+                Namespace = EcsStateMachineSettings.instance.GeneratedNamespace
             };
-            FileWriter.Write("EcsStatesIds.cs", EnumSourceGenerator.Generate(enumDefinition));
+            FileWriter.Write($"{enumName}.cs", EnumSourceGenerator.Generate(enumDefinition));
             
             ctx.AddObjectToAsset(ctx.assetPath, runtimeEcsStateMachineGraph);
             
